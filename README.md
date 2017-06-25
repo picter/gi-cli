@@ -1,3 +1,3 @@
-# gi
+# gi-cli
 
-Git Issues command line interface.
+Git issues command line interface.
