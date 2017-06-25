@@ -1,0 +1,19 @@
+{
+  "name": "gi-cli",
+  "version": "0.0.0",
+  "description": "Git issues command line interface.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noxan/gi-cli.git"
+  },
+  "author": "Richard <hello@noxan.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noxan/gi-cli/issues"
+  },
+  "homepage": "https://github.com/noxan/gi-cli#readme"
+}
