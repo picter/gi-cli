@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/noxan/gi-cli#readme",
   "devDependencies": {
+    "jest": "^20.0.4",
     "typescript": "^2.3.4"
   }
 }
