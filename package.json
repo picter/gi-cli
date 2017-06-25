@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/noxan/gi-cli/issues"
   },
-  "homepage": "https://github.com/noxan/gi-cli#readme"
+  "homepage": "https://github.com/noxan/gi-cli#readme",
+  "devDependencies": {
+    "typescript": "^2.3.4"
+  }
 }
