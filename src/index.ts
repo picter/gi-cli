@@ -6,7 +6,7 @@ const project = {
   name: 'gi-cli',
 };
 
-const getIssues = async () => {
+const getIssues = async (authToken: any) => {
   const response = await axios.post(`${baseUrl}/graphql`, {
     query: `{
       repository(owner: "${project.scope}", name: "${project.name}") {
@@ -22,7 +22,7 @@ const getIssues = async () => {
     },`
   }, {
     headers: {
-      Authorization: 'bearer <token>',
+      Authorization: `bearer ${authToken}`,
     },
   });
   if (response.data) {
@@ -32,7 +32,7 @@ const getIssues = async () => {
 }
 
 const main = async () => {
-  const issues = await getIssues();
+  const issues = await getIssues(process.env.AUTH_TOKEN);
   console.log(issues.map((issue: any) => `${issue.number} - ${issue.title}`));
 };
 
