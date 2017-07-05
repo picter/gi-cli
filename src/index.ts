@@ -1,6 +1,6 @@
 import * as yargs from 'yargs';
 
-import { getIssues } from './github';
+import { list as commandList } from './commands';
 
 const argv = yargs
   .command('test', 'Testing')
@@ -14,11 +14,11 @@ const project = {
   name: 'gi-cli',
 };
 
-const main = async () => {
-  const issues = await getIssues(project, process.env.AUTH_TOKEN);
-  console.log(issues.map((issue: any) => `${issue.number} - ${issue.title}`));
-};
-
-main();
-
-console.log(command);
+switch(command) {
+  case 'list':
+    commandList(project);
+    break;
+  default:
+    console.log(`Unkown command "${command}".`);
+    break;
+}
