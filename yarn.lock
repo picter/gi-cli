@@ -37,6 +37,10 @@
   version "20.0.2"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-20.0.2.tgz#86c751121fb53dbd39bb1a08c45083da13f2dc67"
 
+"@types/node@^8.0.7":
+  version "8.0.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.7.tgz#fb0ad04b5b6f6eabe0372a32a8f1fbba5c130cae"
+
 abab@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.3.tgz#b81de5f7274ec4e756d797cd834f303642724e5d"
