@@ -4,6 +4,7 @@
   "description": "Git issues command line interface.",
   "main": "src/index.js",
   "bin": {
+    "ぎ": "bin/gi",
     "gi": "bin/gi"
   },
   "scripts": {
