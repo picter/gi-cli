@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "description": "Git issues command line interface.",
   "main": "src/index.js",
+  "bin": {
+    "ぎ": "bin/gi",
+    "gi": "bin/gi"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest"
@@ -38,6 +42,8 @@
     "typescript": "^2.3.4"
   },
   "dependencies": {
-    "axios": "^0.16.2"
+    "@types/yargs": "^8.0.0",
+    "axios": "^0.16.2",
+    "yargs": "^8.0.2"
   }
 }

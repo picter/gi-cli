@@ -1,13 +1,24 @@
-import { getIssues } from './github';
+import * as yargs from 'yargs';
+
+import { list as commandList } from './commands';
+
+const argv = yargs
+  .command('list', 'Lists all open issues of this project.')
+  .help()
+  .argv;
+
+const command = argv._[0] || 'list';
 
 const project = {
   scope: 'noxan',
   name: 'gi-cli',
 };
 
-const main = async () => {
-  const issues = await getIssues(project, process.env.AUTH_TOKEN);
-  console.log(issues.map((issue: any) => `${issue.number} - ${issue.title}`));
-};
-
-main();
+switch(command) {
+  case 'list':
+    commandList(project);
+    break;
+  default:
+    console.log(`Unkown command "${command}".`);
+    break;
+}
