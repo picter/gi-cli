@@ -1,4 +1,13 @@
+import * as yargs from 'yargs';
+
 import { getIssues } from './github';
+
+const argv = yargs
+  .command('test', 'Testing')
+  .help()
+  .argv;
+
+const command = argv._[0] || 'list';
 
 const project = {
   scope: 'noxan',
@@ -11,3 +20,5 @@ const main = async () => {
 };
 
 main();
+
+console.log(command);
