@@ -38,6 +38,7 @@
     "typescript": "^2.3.4"
   },
   "dependencies": {
-    "axios": "^0.16.2"
+    "axios": "^0.16.2",
+    "yargs": "^8.0.2"
   }
 }
