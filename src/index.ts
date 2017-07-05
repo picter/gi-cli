@@ -3,7 +3,7 @@ import * as yargs from 'yargs';
 import { list as commandList } from './commands';
 
 const argv = yargs
-  .command('test', 'Testing')
+  .command('list', 'Lists all open issues of this project.')
   .help()
   .argv;
 
