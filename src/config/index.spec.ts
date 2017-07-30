@@ -11,7 +11,7 @@ fs.existsSync.mockReturnValue(false);
 fs.readFileSync = jest.fn();
 fs.readFileSync.mockReturnValue('bla');
 
-import { configPath, configFileExists } from '.';
+import { configPath, configFileExists, loadConfigFile } from '.';
 
 test('Config path is within user home directory.', () => {
   expect(configPath).toEqual('/Users/gi-demo-cf07295117d2/.gi.yaml');
@@ -19,4 +19,10 @@ test('Config path is within user home directory.', () => {
 
 test('Check if config file exists.', () => {
   expect(configFileExists()).toBe(false);
+});
+
+test('Read config file and parse it.', () => {
+  expect(loadConfigFile()).toEqual({
+    'github.com': 'e971086be50a',
+  });
 });
