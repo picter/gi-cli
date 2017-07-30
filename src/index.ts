@@ -20,10 +20,11 @@ const project = {
   scope: 'noxan',
   name: 'gi-cli',
 };
+const authToken = config['github.com'].token;
 
 switch(command) {
   case 'list':
-    commandList(project);
+    commandList(project, authToken);
     break;
   default:
     console.log(`Unkown command "${command}".`);
