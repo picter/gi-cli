@@ -2,12 +2,13 @@
   "name": "gi-cli",
   "version": "0.0.0",
   "description": "Git issues command line interface.",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "bin": {
     "ぎ": "bin/gi",
     "gi": "bin/gi"
   },
   "scripts": {
+    "start": "ts-node .",
     "build": "tsc",
     "test": "jest"
   },
@@ -39,7 +40,7 @@
     "@types/node": "^8.0.7",
     "jest": "^20.0.4",
     "ts-jest": "^20.0.6",
-    "ts-node": "^3.1.0",
+    "ts-node": "^3.3.0",
     "typescript": "^2.3.4"
   },
   "dependencies": {
