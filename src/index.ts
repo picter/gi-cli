@@ -7,6 +7,8 @@ if (!configFileExists()) {
   throw new Error(`No config file found at ${configPath}.`);
 }
 
+const config = loadConfigFile();
+
 const argv = yargs
   .command('list', 'Lists all open issues of this project.')
   .help()
