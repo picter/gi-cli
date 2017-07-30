@@ -11,7 +11,8 @@ fs.existsSync.mockReturnValue(false);
 fs.readFileSync = jest.fn();
 fs.readFileSync.mockReturnValue(`
 ---
-github.com: e971086be50a
+github.com:
+  token: e971086be50a
 `);
 
 import { configPath, configFileExists, loadConfigFile } from '.';
@@ -26,6 +27,6 @@ test('Check if config file exists.', () => {
 
 test('Read config file and parse it.', () => {
   expect(loadConfigFile()).toEqual({
-    'github.com': 'e971086be50a',
+    'github.com': { token: 'e971086be50a' },
   });
 });
