@@ -9,7 +9,10 @@ const fs = require('fs');
 fs.existsSync = jest.fn();
 fs.existsSync.mockReturnValue(false);
 fs.readFileSync = jest.fn();
-fs.readFileSync.mockReturnValue('bla');
+fs.readFileSync.mockReturnValue(`
+---
+github.com: e971086be50a
+`);
 
 import { configPath, configFileExists, loadConfigFile } from '.';
 
