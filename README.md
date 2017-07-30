@@ -6,6 +6,6 @@ Git issues command line interface.
 
 Make sure to have a configuration file at `$HOME/.gi.yaml`. Here an example for its content:
 
-  ---
-  github.com:
-    token: <AUTH-TOKEN>
+    ---
+    github.com:
+      token: <AUTH-TOKEN>
