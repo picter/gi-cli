@@ -1,6 +1,11 @@
 import { getIssues } from '../github';
 
-export default async (project: any, authToken: string) =>  {
+export default async (project: any, authToken: string) => {
   const issues = await getIssues(project, authToken);
-  console.log(issues.map((issue: any) => `${issue.number} - ${issue.title}`));
+
+  issues.map((issue: any) => {
+    if (issue.state === 'OPEN') {
+      console.log(`${issue.number} - ${issue.title}`);
+    }
+  });
 };

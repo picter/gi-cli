@@ -10,6 +10,7 @@ export const getIssues = async (project: any, authToken: any) => {
           edges {
             node {
               number,
+              state,
               title
             }
           }
