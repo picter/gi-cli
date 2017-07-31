@@ -10,9 +10,10 @@ if (!configFileExists()) {
 const config = loadConfigFile();
 
 const argv = yargs
-  .command('list', 'Lists all open issues of this project.')
-  .help()
-  .argv;
+  .command('list', 'Lists all open issues of this project.', y =>
+    y.option('all', { describe: 'Show all issues', default: false }),
+  )
+  .help().argv;
 
 const command = argv._[0] || 'list';
 
@@ -24,7 +25,7 @@ const authToken = config['github.com'].token;
 
 switch (command) {
   case 'list':
-    commandList(project, authToken);
+    commandList(project, argv.all, authToken);
     break;
   default:
     console.log(`Unkown command "${command}".`);
