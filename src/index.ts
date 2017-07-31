@@ -22,7 +22,7 @@ const project = {
 };
 const authToken = config['github.com'].token;
 
-switch(command) {
+switch (command) {
   case 'list':
     commandList(project, authToken);
     break;
