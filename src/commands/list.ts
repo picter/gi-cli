@@ -5,7 +5,7 @@ export default async (project: any, showAll: boolean, authToken: string) => {
 
   issues.map((issue: any) => {
     if (showAll || issue.state === 'OPEN') {
-      console.log(`${issue.number} - ${issue.title}`);
+      console.log(`${issue.number} - ${issue.title}` + (showAll ? ` (${issue.state})` : ''));
     }
   });
 };
