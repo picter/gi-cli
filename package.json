@@ -35,18 +35,18 @@
     ]
   },
   "devDependencies": {
-    "@types/jest": "^20.0.2",
+    "@types/jest": "^21.1.5",
     "@types/js-yaml": "^3.9.0",
     "@types/node": "^8.0.7",
-    "jest": "^20.0.4",
-    "ts-jest": "^20.0.6",
+    "@types/yargs": "^8.0.0",
+    "jest": "^21.2.1",
+    "ts-jest": "^21.2.1",
     "ts-node": "^3.3.0",
     "typescript": "^2.3.4"
   },
   "dependencies": {
-    "@types/yargs": "^8.0.0",
-    "axios": "^0.16.2",
+    "axios": "^0.17.0",
     "js-yaml": "^3.9.1",
-    "yargs": "^8.0.2"
+    "yargs": "^10.0.3"
   }
 }
