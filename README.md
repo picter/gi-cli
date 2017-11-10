@@ -1,6 +1,6 @@
 # gi-cli
 
-https://david-dm.org/noxan/gi-cli/status.svg
+[![David DM](https://david-dm.org/noxan/gi-cli/status.svg)](https://david-dm.org/noxan/gi-cli)
 
 Git issues command line interface.
 
