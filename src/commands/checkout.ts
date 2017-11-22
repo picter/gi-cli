@@ -14,11 +14,11 @@ const checkoutCommand = async (
   const issue = await getIssue(project, issueNumber, authToken);
 
   const slug = slugify(issue.title);
-  console.log(slug);
+  const branchName = `${issue.number}-${slug}`.toLowerCase();
 
   const repository = git(process.cwd());
   const gitStatus = await repository.status();
-  console.log('checkout', gitStatus);
+  console.log('checkout', branchName);
 };
 
 export default checkoutCommand;
