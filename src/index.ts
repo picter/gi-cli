@@ -1,6 +1,6 @@
 import * as yargs from 'yargs';
 
-import { list as commandList } from './commands';
+import { list as commandList, selectCommand } from './commands';
 import { configPath, configFileExists, loadConfigFile } from './config';
 
 if (!configFileExists()) {
@@ -15,19 +15,12 @@ const argv = yargs
   )
   .help().argv;
 
-const command = argv._[0] || 'list';
-
 const project = {
   scope: 'noxan',
   name: 'gi-cli',
 };
 const authToken = config['github.com'].token;
 
-switch (command) {
-  case 'list':
-    commandList(project, argv.all, authToken);
-    break;
-  default:
-    console.log(`Unkown command "${command}".`);
-    break;
-}
+const command = selectCommand(argv._[0]);
+
+command(argv._[0], project, argv, authToken);
