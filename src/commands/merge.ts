@@ -1,4 +1,5 @@
 import { Arguments } from 'yargs';
+import * as opn from 'opn';
 import * as git from 'simple-git/promise';
 
 const pullRequestCommand = async (
@@ -18,6 +19,7 @@ const pullRequestCommand = async (
   const url = `${projectUrl}/compare/master...${branchName}`;
 
   console.log(url);
+  await opn(url, { wait: false });
 };
 
 export default pullRequestCommand;
