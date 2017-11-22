@@ -1,0 +1,1 @@
+export { getRemoteUrl } from './package';
