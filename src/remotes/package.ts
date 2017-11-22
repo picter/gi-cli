@@ -11,10 +11,13 @@ export const getRemoteUrl = (): Promise<string> =>
           return reject(err);
         }
         const json = JSON.parse(data);
-        if (json && json.repository && json.repository.url) {
+        if (!json.hasOwnProperty('repository')) {
+          return reject('Repository remote url not defined in package.json.');
+        }
+        if (typeof json.repository === 'object') {
           return resolve(json.repository.url);
         }
-        return reject('Remote url not defined in package.json.');
+        return resolve(json.repository);
       },
     ),
   );
