@@ -17,8 +17,10 @@ const checkoutCommand = async (
   const branchName = `${issue.number}-${slug}`.toLowerCase();
 
   const repository = git(process.cwd());
-  const gitStatus = await repository.status();
-  console.log('checkout', branchName);
+
+  await repository.checkoutLocalBranch(branchName);
+
+  console.log('Checkout', branchName);
 };
 
 export default checkoutCommand;
