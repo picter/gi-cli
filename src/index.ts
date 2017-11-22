@@ -11,6 +11,11 @@ if (!configFileExists()) {
 const config = loadConfigFile();
 
 const argv = yargs
+  .command(
+    '$0 <issue number>',
+    'Magic command, checkout branch for issue number.',
+  )
+  .command('$0 <>', 'Magic command, without issue number shortcut for list.')
   .command('list', 'Lists all open issues of this project.', y =>
     y.option('all', { describe: 'Show all issues', default: false }),
   )
