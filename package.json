@@ -47,6 +47,7 @@
   "dependencies": {
     "axios": "^0.17.0",
     "js-yaml": "^3.9.1",
+    "slugify": "^1.2.4",
     "yargs": "^10.0.3"
   }
 }
