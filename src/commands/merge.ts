@@ -11,6 +11,9 @@ const pullRequestCommand = async (
   const status = await repository.status();
 
   const branchName = status.current;
+  if (branchName === 'master') {
+    throw new Error('Cannot create pull/merge request for master.');
+  }
   const projectUrl = `https://github.com/${project.scope}/${project.name}`;
   const url = `${projectUrl}/compare/master...${branchName}`;
 
