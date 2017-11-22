@@ -1,6 +1,6 @@
 {
   "name": "gi-cli",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Git issues command line interface.",
   "main": "src/index.ts",
   "bin": {
