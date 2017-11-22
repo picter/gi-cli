@@ -1,7 +1,7 @@
 import { readFile } from 'fs';
 import { join } from 'path';
 
-export const getRemoteUrl = () =>
+export const getRemoteUrl = (): Promise<string> =>
   new Promise((resolve, reject) =>
     readFile(
       join(process.cwd(), 'package.json'),
