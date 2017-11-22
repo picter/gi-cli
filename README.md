@@ -19,10 +19,11 @@ its content:
     gi [command]
 
     Commands:
-      gi <issue number>  Checkout branch with issue number and title.
-      gi list            Lists all open issues of this project.
-      gi merge           Create pull/merge request for current branch.
+      <issue number>  Checkout branch for issue number.
+      list            Lists all open issues of this project.               [default]
+      merge           Create pull/merge request for current branch.
 
     Options:
       --version  Show version number                                       [boolean]
       --help     Show help                                                 [boolean]
+      --all      Show all issues                                    [default: false]
