@@ -1,4 +1,5 @@
 import { Arguments } from 'yargs';
+import * as git from 'simple-git/promise';
 
 const pullRequestCommand = async (
   command: string,
@@ -6,7 +7,10 @@ const pullRequestCommand = async (
   args: Arguments,
   authToken: string,
 ) => {
-  const branchName = 'branchName';
+  const repository = git(process.cwd());
+  const status = await repository.status();
+
+  const branchName = status.current;
   const projectUrl = `https://github.com/${project.scope}/${project.name}`;
   const url = `${projectUrl}/compare/master...${branchName}`;
 
