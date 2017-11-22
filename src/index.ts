@@ -14,6 +14,7 @@ const argv = yargs
   .command('list', 'Lists all open issues of this project.', y =>
     y.option('all', { describe: 'Show all issues', default: false }),
   )
+  .command('merge', 'Create pull/merge request for current branch.')
   .help().argv;
 
 const authToken = config['github.com'].token;
