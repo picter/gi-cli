@@ -11,6 +11,7 @@ if (!configFileExists()) {
 const config = loadConfigFile();
 
 const argv = yargs
+  .usage('gi [command]')
   .command('<issue number>', 'Checkout branch for issue number.')
   .command('$0 list', 'Lists all open issues of this project.', y =>
     y.option('all', { describe: 'Show all issues', default: false }),
