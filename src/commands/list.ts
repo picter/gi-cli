@@ -1,6 +1,6 @@
 import { getIssues } from '../github';
 
-export default async (
+const listCommand = async (
   command: string,
   project: any,
   showAll: boolean,
@@ -17,3 +17,5 @@ export default async (
     }
   });
 };
+
+export default listCommand;

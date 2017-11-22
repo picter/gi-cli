@@ -1,4 +1,4 @@
-export default async (
+const checkoutCommand = async (
   command: string,
   project: any,
   showAll: boolean,
@@ -6,3 +6,5 @@ export default async (
 ) => {
   console.log('checkout');
 };
+
+export default checkoutCommand;
