@@ -1,4 +1,5 @@
 import { Arguments } from 'yargs';
+import * as slugify from 'slugify';
 
 import { getIssue } from '../github';
 
@@ -10,7 +11,9 @@ const checkoutCommand = async (
 ) => {
   const issueNumber = parseInt(command, 10);
   const issue = await getIssue(project, issueNumber, authToken);
-  console.log(issue);
+
+  const slug = slugify(issue.title);
+  console.log(slug);
 };
 
 export default checkoutCommand;
