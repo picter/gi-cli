@@ -2,7 +2,7 @@ import * as yargs from 'yargs';
 
 import { list as commandList, selectCommand } from './commands';
 import { configPath, configFileExists, loadConfigFile } from './config';
-import { getRemoteUrl } from './remotes';
+import detectRemote from './remotes';
 
 if (!configFileExists()) {
   throw new Error(`No config file found at ${configPath}.`);
@@ -19,12 +19,7 @@ const argv = yargs
 const authToken = config['github.com'].token;
 
 const main = async () => {
-  const remote = await getRemoteUrl();
-  console.log(remote);
-  const project = {
-    scope: 'noxan',
-    name: 'gi-cli',
-  };
+  const project = await detectRemote();
 
   const command = selectCommand(argv._[0]);
 
