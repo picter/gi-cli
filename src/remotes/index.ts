@@ -1,12 +1,16 @@
 import { getRemoteUrl } from './package';
 
-export default async () => {
-  const remote = await getRemoteUrl();
-
-  console.log(remote);
-
+export const extractFromRemoteUrl = (remoteUrl: string) => {
+  const strippedRemoteUrl = remoteUrl.split(':').pop() || remoteUrl;
+  const parts = strippedRemoteUrl.replace(/\.git$/, '').split('/');
   return {
-    scope: 'noxan',
-    name: 'gi-cli',
+    name: parts.pop(),
+    scope: parts.pop(),
   };
+};
+
+export default async () => {
+  const remoteUrl = await getRemoteUrl();
+
+  return extractFromRemoteUrl(remoteUrl);
 };
