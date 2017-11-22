@@ -1,6 +1,6 @@
 import list from './list';
 import checkout from './checkout';
-import pullRequest from './pull-request';
+import merge from './merge';
 import unknown from './unknown';
 
 export const selectCommand = (command: string) => {
@@ -11,7 +11,7 @@ export const selectCommand = (command: string) => {
   }
 
   if (command === 'merge') {
-    return pullRequest;
+    return merge;
   }
 
   // try to parse command as number for issue detection / checkout
@@ -25,5 +25,5 @@ export const selectCommand = (command: string) => {
 
 export { default as list } from './list';
 export { default as checkout } from './checkout';
-export { default as pullRequest } from './pull-request';
+export { default as merge } from './merge';
 export { default as unknown } from './unknown';
