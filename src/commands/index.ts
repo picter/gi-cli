@@ -10,6 +10,10 @@ export const selectCommand = (command: string) => {
     return list;
   }
 
+  if (command === 'merge') {
+    return pullRequest;
+  }
+
   // try to parse command as number for issue detection / checkout
   const issueNumber = parseInt(command, 10);
   if (isNaN(issueNumber) || issueNumber < 1) {
