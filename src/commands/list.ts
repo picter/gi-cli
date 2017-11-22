@@ -10,7 +10,10 @@ export default async (
 
   issues.map((issue: any) => {
     if (showAll || issue.state === 'OPEN') {
-      console.log(`${issue.number} - ${issue.title}` + (showAll ? ` (${issue.state})` : ''));
+      console.log(
+        `${issue.number} - ${issue.title}` +
+          (showAll ? ` (${issue.state})` : ''),
+      );
     }
   });
 };
