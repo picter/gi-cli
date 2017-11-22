@@ -11,3 +11,7 @@ test('0 as command parameter results in unknown command.', () => {
 test('1 as command parameter results in checkout command.', () => {
   expect(selectCommand('1')).toEqual(checkout);
 });
+
+test('Single space as command parameter results in unknown command.', () => {
+  expect(selectCommand(' ')).toEqual(unknown);
+});
