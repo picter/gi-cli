@@ -1,6 +1,11 @@
 import { getIssues } from '../github';
 
-export default async (project: any, showAll: boolean, authToken: string) => {
+export default async (
+  command: string,
+  project: any,
+  showAll: boolean,
+  authToken: string,
+) => {
   const issues = await getIssues(project, authToken);
 
   issues.map((issue: any) => {
