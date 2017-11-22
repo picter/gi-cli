@@ -23,4 +23,4 @@ const authToken = config['github.com'].token;
 
 const command = selectCommand(argv._[0]);
 
-command(argv._[0], project, argv.all, authToken);
+command(argv._[0], project, argv, authToken);

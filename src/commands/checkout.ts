@@ -1,7 +1,9 @@
+import { Arguments } from 'yargs';
+
 const checkoutCommand = async (
   command: string,
   project: any,
-  showAll: boolean,
+  args: Arguments,
   authToken: string,
 ) => {
   console.log('checkout');
