@@ -1,5 +1,6 @@
 import list from './list';
 import checkout from './checkout';
+import pullRequest from './pull-request';
 import unknown from './unknown';
 
 export const selectCommand = (command: string) => {
@@ -20,4 +21,5 @@ export const selectCommand = (command: string) => {
 
 export { default as list } from './list';
 export { default as checkout } from './checkout';
+export { default as pullRequest } from './pull-request';
 export { default as unknown } from './unknown';
