@@ -17,11 +17,11 @@ const printIssues = (
   });
 }
 
-const selectIssue = async (
+const showIssueSelector = async (
   issues: Array<Object>,
   args: Arguments,
 ) => {
-  const list = issues
+  const choices = issues
     .filter((issue: any) => args.all || issue.state === 'OPEN')
     .map((issue: any) => ({
       name: `${issue.number} - ${issue.title}` +
@@ -33,9 +33,9 @@ const selectIssue = async (
     {
       type: 'list',
       name: 'issue',
-      message: "Select issue:",
+      message: "Checkout branch for issue:",
       paginated: true,
-      choices: list
+      choices
     }
   ]);
 
@@ -50,7 +50,7 @@ const listCommand = async (
 ) => {
   const issues = await getIssues(project, authToken);
   if (args.interactive) {
-    return selectIssue(issues, args);
+    return showIssueSelector(issues, args);
   }
   return printIssues(issues, args);
 };
