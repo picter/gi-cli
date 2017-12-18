@@ -13,8 +13,12 @@ const checkoutCommand = async (
   const issueNumber = parseInt(command, 10);
   const issue = await getIssue(project, issueNumber, authToken);
 
-  const slug = slugify(issue.title);
-  const branchName = `${issue.number}-${slug}`.toLowerCase();
+  const slug = slugify(issue.title, {
+    remove: /['",.\\\/~:;^]/g,
+    lower: true,
+  });
+  
+  const branchName = `${issue.number}-${slug}`;
 
   const repository = git(process.cwd());
 
