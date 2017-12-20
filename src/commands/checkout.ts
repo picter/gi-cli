@@ -17,7 +17,7 @@ const checkoutCommand = async (
     remove: /['",.\\\/~:;^]/g,
     lower: true,
   });
-  
+
   const branchName = `${issue.number}-${slug}`;
 
   const repository = git(process.cwd());
