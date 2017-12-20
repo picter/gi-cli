@@ -23,3 +23,7 @@ test('Single space as command parameter results in unknown command.', () => {
 test('Merge command parameter results in merge command.', () => {
   expect(selectCommand('merge')).toEqual(merge);
 });
+
+test('PR command parameter results in merge command.', () => {
+  expect(selectCommand('pr')).toEqual(merge);
+});
