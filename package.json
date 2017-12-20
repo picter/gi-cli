@@ -12,7 +12,8 @@
     "prebuild": "rimraf dist",
     "start": "ts-node .",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest ",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
