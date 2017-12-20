@@ -38,6 +38,7 @@
     ]
   },
   "devDependencies": {
+    "@types/inquirer": "^0.0.35",
     "@types/jest": "^21.1.5",
     "@types/js-yaml": "^3.9.0",
     "@types/node": "^8.0.7",
@@ -50,6 +51,7 @@
   },
   "dependencies": {
     "axios": "^0.17.0",
+    "inquirer": "^4.0.0",
     "js-yaml": "^3.9.1",
     "opn": "^5.1.0",
     "simple-git": "^1.82.0",
