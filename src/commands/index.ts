@@ -10,7 +10,7 @@ export const selectCommand = (command: string) => {
     return list;
   }
 
-  if (command === 'merge') {
+  if (command === 'merge' || command === 'pr') {
     return merge;
   }
 
