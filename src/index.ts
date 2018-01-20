@@ -16,7 +16,11 @@ const argv = yargs
   .command('list', 'Lists all open issues of this project.', y =>
     y
       .option('all', { describe: 'Show all issues', default: false })
-      .option('interactive', { alias: 'i', describe: 'Show interactive list', default: false }),
+      .option('interactive', {
+        alias: 'i',
+        describe: 'Show interactive list',
+        default: false,
+      }),
   )
   .command(['pr', 'merge'], 'Create pull/merge request for current branch.')
   .help().argv;
