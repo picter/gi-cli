@@ -1,6 +1,7 @@
 import list from './list';
 import checkout from './checkout';
 import merge from './merge';
+import release from './release';
 import unknown from './unknown';
 
 export const selectCommand = (command: string) => {
@@ -14,6 +15,10 @@ export const selectCommand = (command: string) => {
     return merge;
   }
 
+  if (command === 'release') {
+    return release;
+  }
+
   // try to parse command as number for issue detection / checkout
   const issueNumber = parseInt(command, 10);
   if (isNaN(issueNumber) || issueNumber < 1) {
@@ -23,4 +28,4 @@ export const selectCommand = (command: string) => {
   return checkout;
 };
 
-export { list, checkout, merge, unknown };
+export { list, checkout, merge, release, unknown };

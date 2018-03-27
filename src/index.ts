@@ -23,6 +23,7 @@ const argv = yargs
       }),
   )
   .command(['pr', 'merge'], 'Create pull/merge request for current branch.')
+  .command(['release'], 'Release current branch.')
   .help().argv;
 
 const authToken = config['github.com'].token;

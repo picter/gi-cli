@@ -1,4 +1,4 @@
-import { selectCommand, list, checkout, merge, unknown } from '.';
+import { selectCommand, list, checkout, merge, release, unknown } from '.';
 
 test('Empty command parameter results in list command.', () => {
   expect(selectCommand('')).toEqual(list);
@@ -26,4 +26,8 @@ test('Merge command parameter results in merge command.', () => {
 
 test('PR command parameter results in merge command.', () => {
   expect(selectCommand('pr')).toEqual(merge);
+});
+
+test('Release command parameter results in release command.', () => {
+  expect(selectCommand('release')).toEqual(release);
 });
