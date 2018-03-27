@@ -23,7 +23,4 @@ export const selectCommand = (command: string) => {
   return checkout;
 };
 
-export { default as list } from './list';
-export { default as checkout } from './checkout';
-export { default as merge } from './merge';
-export { default as unknown } from './unknown';
+export { list, checkout, merge, unknown };
