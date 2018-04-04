@@ -7,11 +7,14 @@ interface Issue {
   title: string;
 }
 
-export const checkout = async (issue: Issue) => {
-  const slug = slugify(issue.title, {
+export const slugifyTitle = (title: string) =>
+  slugify(title, {
     remove: /['",.\\\/~:;^]/g,
     lower: true,
   });
+
+export const checkout = async (issue: Issue) => {
+  const slug = slugifyTitle(issue.title);
 
   const branchName = `${issue.number}-${slug}`;
 
