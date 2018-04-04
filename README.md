@@ -1,7 +1,7 @@
 # gi-cli
 
-[![Build Status](https://travis-ci.org/noxan/gi-cli.svg?branch=master)](https://travis-ci.org/noxan/gi-cli)
-[![David DM](https://david-dm.org/noxan/gi-cli/status.svg)](https://david-dm.org/noxan/gi-cli)
+[![Build Status](https://travis-ci.org/picter/gi-cli.svg?branch=master)](https://travis-ci.org/picter/gi-cli)
+[![David DM](https://david-dm.org/picter/gi-cli/status.svg)](https://david-dm.org/picter/gi-cli)
 
 Git issues command line interface.
 
