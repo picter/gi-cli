@@ -9,7 +9,7 @@ interface Issue {
 
 export const slugifyTitle = (title: string) =>
   slugify(title, {
-    remove: /['",.\\\/~:;^]/g,
+    remove: /['",.\\\/~:;^()`]/g,
     lower: true,
   });
 
