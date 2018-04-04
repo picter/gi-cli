@@ -13,3 +13,9 @@ test('Convert issue title with ` to branch name (slugify).', () => {
     'implement-flag-props-like-nopaddings-and-nomargins-on-text-components',
   );
 });
+
+test('Convert issue title with " to branch name (slugify).', () => {
+  expect(
+    slugifyTitle('Remove "Evaluation active" from round navigation items'),
+  ).toEqual('remove-evaluation-active-from-round-navigation-items');
+});
