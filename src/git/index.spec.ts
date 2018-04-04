@@ -14,6 +14,12 @@ test('Convert issue title with ` to branch name (slugify).', () => {
   );
 });
 
+test('Convert issue title with brackets to branch name (slugify).', () => {
+  expect(slugifyTitle('Some random title (with some extra words)')).toEqual(
+    'some-random-title-with-some-extra-words',
+  );
+});
+
 test('Convert issue title with " to branch name (slugify).', () => {
   expect(
     slugifyTitle('Remove "Evaluation active" from round navigation items'),
