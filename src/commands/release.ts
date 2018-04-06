@@ -1,22 +1,28 @@
 import { Arguments } from 'yargs';
-import * as opn from 'opn';
 import * as git from 'simple-git/promise';
+import * as opn from 'opn';
+import * as readPkg from 'read-pkg';
+import * as semver from 'semver';
 import * as writePkg from 'write-pkg';
 
 const productionBranchname = 'production';
 
+const validateVersion = (version: string) =>
+  !!semver.valid(version) || false;
+
 const releaseCommand = async (
-  command: string,
+  command: any /* ask Richard about this */,
   project: any,
   args: Arguments,
   authToken: string,
 ) => {
+  const SEMVER_LEVELS = ['major', 'minor', 'patch'];
   const repository = git(process.cwd());
-  const status = await repository.status();
-  const version = command;
+  const version = (await readPkg()).version;
+  const branchName = (await repository.status()).current;
 
-  const branchName = status.current;
-  console.log(branchName);
+  let nextVersion = command;
+
   if (branchName === productionBranchname) {
     throw new Error(
       `Cannot create release for ${productionBranchname} branch.`,
@@ -25,15 +31,16 @@ const releaseCommand = async (
     console.error('WARNING: You should release from master branch.');
   }
 
-  // Decide if it's major, minor or patch version change (ask user?)
-  // (Use changelog to decide later?)
+  if (SEMVER_LEVELS.indexOf(nextVersion) !== -1) {
+    nextVersion = semver.inc(version, nextVersion);
+  }
 
   // Checkout new branch `release-x.y.z`
-  const releaseBranch = `release-${version}`;
+  const releaseBranch = `release-${nextVersion}`;
   repository.checkoutLocalBranch(releaseBranch);
 
   // Writes version number in package.json
-  writePkg({ version });
+  writePkg({ version: nextVersion });
 
   const projectUrl = `https://github.com/${project.scope}/${project.name}`;
   const url = `${projectUrl}/compare/${productionBranchname}...${releaseBranch}`; // Use new branch name
