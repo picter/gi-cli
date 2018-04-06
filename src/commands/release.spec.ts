@@ -2,15 +2,18 @@ import { Arguments } from 'yargs';
 
 import release from './release';
 
+const mockAdd = jest.fn();
 const mockCheckoutLocalBranch = jest.fn();
+const mockCommit = jest.fn();
 jest.mock('simple-git/promise', () => (pwd: string) => {
   return {
+    add: mockAdd,
+    checkoutLocalBranch: mockCheckoutLocalBranch,
     status: jest
       .fn()
       .mockResolvedValueOnce({ current: 'master' })
       .mockResolvedValueOnce({ current: 'production' })
       .mockResolvedValueOnce({ current: 'random' }),
-    checkoutLocalBranch: mockCheckoutLocalBranch,
   };
 });
 
@@ -63,6 +66,14 @@ describe('release command', () => {
       expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
     });
 
+    it('adds "package.json" to staging', () => {
+      expect(mockAdd).toHaveBeenCalledWith('package.json');
+    });
+
+    it(`commits with "Release v${version}" message`, () => {
+      expect(mockCommit).toHaveBeenCalledWith(`Release v${version}`);
+    });
+
     afterAll(() => {
       mockCheckoutLocalBranch.mockClear();
       mockOpn.mockClear();
@@ -93,6 +104,14 @@ describe('release command', () => {
         expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
       });
 
+      it('adds "package.json" to staging', () => {
+        expect(mockAdd).toHaveBeenCalledWith('package.json');
+      });
+
+      it(`commits with "Release v${version}" message`, () => {
+        expect(mockCommit).toHaveBeenCalledWith(`Release v${majorVersion}`);
+      });
+
       afterAll(() => {
         mockCheckoutLocalBranch.mockClear();
         mockOpn.mockClear();
@@ -121,6 +140,14 @@ describe('release command', () => {
         const pullRequestUrl = buildPullRequestUrl(project, 'production', releaseBranch);
         expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
       });
+
+      it('adds "package.json" to staging', () => {
+        expect(mockAdd).toHaveBeenCalledWith('package.json');
+      });
+
+      it(`commits with "Release v${version}" message`, () => {
+        expect(mockCommit).toHaveBeenCalledWith(`Release v${minorVersion}`);
+      });
     });
 
     describe('patch level', () => {
@@ -143,6 +170,14 @@ describe('release command', () => {
       it('calls "opn" with the pull request url', () => {
         const pullRequestUrl = buildPullRequestUrl(project, 'production', releaseBranch);
         expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
+      });
+
+      it('adds "package.json" to staging', () => {
+        expect(mockAdd).toHaveBeenCalledWith('package.json');
+      });
+
+      it(`commits with "Release v${version}" message`, () => {
+        expect(mockCommit).toHaveBeenCalledWith(`Release v${patchVersion}`);
       });
     });
   });
