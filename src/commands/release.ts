@@ -22,6 +22,13 @@ const releaseCommand = async (
     console.error('WARNING: You should release from master branch.');
   }
 
+  // Decide if it's major, minor or patch version change (ask user?)
+  // (Use changelog to decide later?)
+
+  // Checkout new branch `release-x.y.z` or `release-x-y-z`.
+
+  // Increments version number in package.json
+
   const projectUrl = `https://github.com/${project.scope}/${project.name}`;
   const url = `${projectUrl}/compare/${productionBranchname}...${branchName}`; // Use new branch name
 
