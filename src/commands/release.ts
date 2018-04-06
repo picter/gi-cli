@@ -1,6 +1,7 @@
 import { Arguments } from 'yargs';
 import * as opn from 'opn';
 import * as git from 'simple-git/promise';
+import * as writePkg from 'write-pkg';
 
 const productionBranchname = 'production';
 
@@ -12,8 +13,10 @@ const releaseCommand = async (
 ) => {
   const repository = git(process.cwd());
   const status = await repository.status();
+  const version = command;
 
   const branchName = status.current;
+  console.log(branchName);
   if (branchName === productionBranchname) {
     throw new Error(
       `Cannot create release for ${productionBranchname} branch.`,
@@ -25,14 +28,16 @@ const releaseCommand = async (
   // Decide if it's major, minor or patch version change (ask user?)
   // (Use changelog to decide later?)
 
-  // Checkout new branch `release-x.y.z` or `release-x-y-z`.
+  // Checkout new branch `release-x.y.z`
+  const releaseBranch = `release-${version}`;
+  repository.checkoutLocalBranch(releaseBranch);
 
-  // Increments version number in package.json
+  // Writes version number in package.json
+  writePkg({ version });
 
   const projectUrl = `https://github.com/${project.scope}/${project.name}`;
-  const url = `${projectUrl}/compare/${productionBranchname}...${branchName}`; // Use new branch name
+  const url = `${projectUrl}/compare/${productionBranchname}...${releaseBranch}`; // Use new branch name
 
-  console.log(url);
   await opn(url, { wait: false });
 };
 
