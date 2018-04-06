@@ -2,7 +2,7 @@ import { Arguments } from 'yargs';
 import * as opn from 'opn';
 import * as git from 'simple-git/promise';
 
-const productionBranchname = '';
+const productionBranchname = 'production';
 
 const releaseCommand = async (
   command: string,
