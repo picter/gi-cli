@@ -42,6 +42,9 @@ const releaseCommand = async (
   // Writes version number in package.json
   writePkg({ version: nextVersion });
 
+  await repository.add('package.json');
+  // await repository.commit('package.json');
+
   const projectUrl = `https://github.com/${project.scope}/${project.name}`;
   const url = `${projectUrl}/compare/${productionBranchname}...${releaseBranch}`; // Use new branch name
 
