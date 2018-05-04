@@ -2,34 +2,38 @@ import { Arguments } from 'yargs';
 
 import release from './release';
 
+const version = '1.1.1';
+const project = {
+  name: 'project',
+  scope: 'picter',
+};
+const productionBranch = 'release';
+const argv = { _: [], $0: '', newVersion: '' };
+const token = '';
+
+// Initialize all necessary mock functions
 const mockAdd = jest.fn();
 const mockCheckoutLocalBranch = jest.fn();
 const mockCommit = jest.fn();
 const mockPush = jest.fn();
+const mockWritePkg = jest.fn(() => Promise.resolve());
+const mockReadPkg = jest.fn().mockResolvedValue({ version });
+const mockOpn = jest.fn();
+const mockStatus = jest.fn().mockResolvedValue({ current: 'master' });
+
+// Register all necessary mock modules (from external packages)
+jest.mock('write-pkg', () => (args: any) => mockWritePkg(args));
+jest.mock('read-pkg', () => () => mockReadPkg());
+jest.mock('opn', () => (url: string) => mockOpn(url));
 jest.mock('simple-git/promise', () => (pwd: string) => {
   return {
     add: mockAdd,
     checkoutLocalBranch: mockCheckoutLocalBranch,
     commit: mockCommit,
     push: mockPush,
-    status: jest
-      .fn()
-      .mockResolvedValueOnce({ current: 'master' })
-      .mockResolvedValueOnce({ current: 'production' })
-      .mockResolvedValueOnce({ current: 'random' }),
+    status: mockStatus,
   };
 });
-
-const version = '1.1.1';
-
-const mockWritePkg = jest.fn(() => Promise.resolve());
-jest.mock('write-pkg', () => (args: any) => mockWritePkg(args));
-
-const mockReadPkg = jest.fn().mockResolvedValue({ version });
-jest.mock('read-pkg', () => () => mockReadPkg());
-
-const mockOpn = jest.fn();
-jest.mock('opn', () => (url: string) => mockOpn(url));
 
 const buildPullRequestUrl = (
   project: any,
@@ -39,14 +43,6 @@ const buildPullRequestUrl = (
   `https://github.com/${project.scope}/${
     project.name
   }/compare/${productionBranch}...${releaseBranch}`;
-
-const project = {
-  name: 'project',
-  scope: 'picter',
-};
-const productionBranch = 'release';
-const argv = { _: [], $0: '', newVersion: '' };
-const token = '';
 
 describe('release command', () => {
   describe('when receives a specific version number', () => {
