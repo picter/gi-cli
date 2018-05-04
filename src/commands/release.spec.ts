@@ -42,17 +42,18 @@ describe('release command', () => {
     name: 'project',
     scope: 'picter',
   };
-  const argv = { _: [], $0: '' };
+  const argv = { _: [], $0: '', version: '' };
   const token = '';
 
   describe('when receives a specific version number', () => {
     const releaseBranch = `release-${version}`;
 
     beforeAll(() => {
-      release(version, project, argv, token);
+      argv.version = version;
+      release('release', project, argv, token);
     });
 
-    it(`creates a new branch with "release-${version}"`, () => {
+    it('creates a new branch with "release-1.1.1"', () => {
       expect(mockCheckoutLocalBranch).toHaveBeenCalledWith(releaseBranch);
     });
 
@@ -62,7 +63,11 @@ describe('release command', () => {
     });
 
     it('calls "opn" with the pull request url', () => {
-      const pullRequestUrl = buildPullRequestUrl(project, 'production', releaseBranch);
+      const pullRequestUrl = buildPullRequestUrl(
+        project,
+        'production',
+        releaseBranch,
+      );
       expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
     });
 
@@ -70,7 +75,7 @@ describe('release command', () => {
       expect(mockAdd).toHaveBeenCalledWith('package.json');
     });
 
-    it(`commits with "Release v${version}" message`, () => {
+    it(`commits with "Release v1.1.1" message`, () => {
       expect(mockCommit).toHaveBeenCalledWith(`Release v${version}`);
     });
 
@@ -87,10 +92,11 @@ describe('release command', () => {
       const releaseBranch = `release-${majorVersion}`;
 
       beforeAll(() => {
-        release('major', project, argv, token);
+        argv.version = majorVersion;
+        release('release', project, argv, token);
       });
 
-      it(`creates a new branch with "release-${majorVersion}"`, () => {
+      it(`creates a new branch with "release-2.0.0"`, () => {
         expect(mockCheckoutLocalBranch).toHaveBeenCalledWith(releaseBranch);
       });
 
@@ -100,7 +106,11 @@ describe('release command', () => {
       });
 
       it('calls "opn" with the pull request url', () => {
-        const pullRequestUrl = buildPullRequestUrl(project, 'production', releaseBranch);
+        const pullRequestUrl = buildPullRequestUrl(
+          project,
+          'production',
+          releaseBranch,
+        );
         expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
       });
 
@@ -108,7 +118,7 @@ describe('release command', () => {
         expect(mockAdd).toHaveBeenCalledWith('package.json');
       });
 
-      it(`commits with "Release v${version}" message`, () => {
+      it(`commits with "Release v2.0.0" message`, () => {
         expect(mockCommit).toHaveBeenCalledWith(`Release v${majorVersion}`);
       });
 
@@ -124,10 +134,11 @@ describe('release command', () => {
       const releaseBranch = `release-${minorVersion}`;
 
       beforeAll(() => {
-        release('minor', project, argv, token);
+        argv.version = minorVersion;
+        release('release', project, argv, token);
       });
 
-      it(`creates a new branch with "release-${minorVersion}"`, () => {
+      it(`creates a new branch with "release-1.2.0"`, () => {
         expect(mockCheckoutLocalBranch).toHaveBeenCalledWith(releaseBranch);
       });
 
@@ -137,7 +148,11 @@ describe('release command', () => {
       });
 
       it('calls "opn" with the pull request url', () => {
-        const pullRequestUrl = buildPullRequestUrl(project, 'production', releaseBranch);
+        const pullRequestUrl = buildPullRequestUrl(
+          project,
+          'production',
+          releaseBranch,
+        );
         expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
       });
 
@@ -145,7 +160,7 @@ describe('release command', () => {
         expect(mockAdd).toHaveBeenCalledWith('package.json');
       });
 
-      it(`commits with "Release v${version}" message`, () => {
+      it(`commits with "Release v1.2.0" message`, () => {
         expect(mockCommit).toHaveBeenCalledWith(`Release v${minorVersion}`);
       });
     });
@@ -155,10 +170,11 @@ describe('release command', () => {
       const releaseBranch = `release-${patchVersion}`;
 
       beforeAll(() => {
-        release('patch', project, argv, token);
+        argv.version = patchVersion;
+        release('release', project, argv, token);
       });
 
-      it(`creates a new branch with "release-${patchVersion}"`, () => {
+      it(`creates a new branch with "release-1.1.2"`, () => {
         expect(mockCheckoutLocalBranch).toHaveBeenCalledWith(releaseBranch);
       });
 
@@ -168,7 +184,11 @@ describe('release command', () => {
       });
 
       it('calls "opn" with the pull request url', () => {
-        const pullRequestUrl = buildPullRequestUrl(project, 'production', releaseBranch);
+        const pullRequestUrl = buildPullRequestUrl(
+          project,
+          'production',
+          releaseBranch,
+        );
         expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
       });
 
