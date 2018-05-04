@@ -23,8 +23,8 @@ const argv = yargs
       }),
   )
   .command(['pr', 'merge'], 'Create pull/merge request for current branch.')
-  .command('release <version>', 'Release current branch.', y =>
-    y.positional('version', {
+  .command('release [new-version]', 'Release current branch.', y =>
+    y.positional('new-version', {
       describe: 'The release version semver valid number or type.',
       type: 'string',
       default: 'patch',
