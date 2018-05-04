@@ -7,9 +7,6 @@ import * as writePkg from 'write-pkg';
 
 const productionBranchname = 'production';
 
-const validateVersion = (version: string) =>
-  !!semver.valid(version) || false;
-
 const releaseCommand = async (
   command: string,
   project: any,
@@ -17,19 +14,11 @@ const releaseCommand = async (
   authToken: string,
 ) => {
   // TODO: cleanup unused code
-  const SEMVER_LEVELS = ['major', 'minor', 'patch'];
+  const SEMVER_LEVELS: Array<String> = ['major', 'minor', 'patch'];
   const repository = git(process.cwd());
   const packageJson = await readPkg();
   const version = packageJson.version;
   const branchName = (await repository.status()).current;
-
-  // TODO: check how to do this better with yargs (excluding parameters with in same variable)
-  let versionIncrease: any = 'patch';
-  if (args.major) {
-    versionIncrease = 'major';
-  } else if (args.minor) {
-    versionIncrease = 'minor';
-  }
 
   if (branchName === productionBranchname) {
     throw new Error(
@@ -39,15 +28,25 @@ const releaseCommand = async (
     console.error('WARNING: You should release from master branch.');
   }
 
-  const nextVersion = semver.inc(version, versionIncrease);
+  let versionIncrease = args.version;
+
+  if (SEMVER_LEVELS.includes(args.version)) {
+    versionIncrease = semver.inc(version, versionIncrease);
+  }
+
+  if (!!semver.valid(versionIncrease)) {
+    throw new Error(
+      `Version "${versionIncrease}" does not comply with semver.`,
+    );
+  }
 
   // Checkout new branch `release-x.y.z`
-  const releaseBranch = `release-${nextVersion}`;
+  const releaseBranch = `release-${versionIncrease}`;
   repository.checkoutLocalBranch(releaseBranch);
 
   // Writes version number in package.json
   // TODO: fix this by not overriding anything else than the version
-  writePkg({ ...packageJson, version: nextVersion });
+  writePkg({ ...packageJson, version: versionIncrease });
 
   await repository.add('package.json');
   // TODO: checkout api of simplegit to commit changes with proper commit message
