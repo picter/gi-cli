@@ -13,11 +13,9 @@ const releaseCommand = async (
   args: Arguments,
   authToken: string,
 ) => {
-  // TODO: cleanup unused code
   const SEMVER_LEVELS: Array<String> = ['major', 'minor', 'patch'];
   const repository = git(process.cwd());
   const packageJson = await readPkg();
-  const version = packageJson.version;
   const branchName = (await repository.status()).current;
 
   if (branchName === productionBranchname) {
@@ -28,15 +26,15 @@ const releaseCommand = async (
     console.error('WARNING: You should release from master branch.');
   }
 
-  let versionIncrease = args.version;
+  let versionIncrease = args.newVersion;
 
-  if (SEMVER_LEVELS.includes(args.version)) {
-    versionIncrease = semver.inc(version, versionIncrease);
+  if (SEMVER_LEVELS.includes(versionIncrease)) {
+    versionIncrease = semver.inc(packageJson.version, versionIncrease);
   }
 
   if (!semver.valid(versionIncrease)) {
     throw new Error(
-      `Version "${versionIncrease}" does not comply with semver.`,
+      `Version "${versionIncrease}" does not comply with Semver.`,
     );
   }
 
@@ -45,8 +43,8 @@ const releaseCommand = async (
   repository.checkoutLocalBranch(releaseBranch);
 
   // Writes version number in package.json
-  // TODO: fix this by not overriding anything else than the version
-  writePkg({ ...packageJson, version: versionIncrease });
+  packageJson.version = versionIncrease;
+  await writePkg(packageJson);
 
   await repository.add('package.json');
   await repository.commit(`Release v${versionIncrease}`);
