@@ -16,6 +16,7 @@ const releaseCommand = async (
   args: Arguments,
   authToken: string,
 ) => {
+  // TODO: cleanup unused code
   const SEMVER_LEVELS = ['major', 'minor', 'patch'];
   const repository = git(process.cwd());
   const packageJson = await readPkg();
@@ -44,9 +45,11 @@ const releaseCommand = async (
   repository.checkoutLocalBranch(releaseBranch);
 
   // Writes version number in package.json
+  // TODO: fix this by not overriding anything else than the version
   writePkg({ ...packageJson, version: nextVersion });
 
   await repository.add('package.json');
+  // TODO: checkout api of simplegit to commit changes with proper commit message
   // await repository.commit('package.json');
 
   const projectUrl = `https://github.com/${project.scope}/${project.name}`;
