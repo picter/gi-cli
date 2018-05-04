@@ -1,6 +1,6 @@
 {
   "name": "gi-cli",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Git issues command line interface.",
   "main": "src/index.ts",
   "bin": {
@@ -19,7 +19,10 @@
     "type": "git",
     "url": "git+https://github.com/picter/gi-cli.git"
   },
-  "author": "Richard <richard@picter.com>",
+  "author": {
+    "name": "Richard",
+    "email": "richard@picter.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/picter/gi-cli/issues"
@@ -63,5 +66,7 @@
     "slugify": "^1.2.7",
     "write-pkg": "^3.1.0",
     "yargs": "^11.0.0"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "gi-cli@1.2.1"
 }
