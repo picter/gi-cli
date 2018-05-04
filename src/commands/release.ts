@@ -18,7 +18,8 @@ const releaseCommand = async (
 ) => {
   const SEMVER_LEVELS = ['major', 'minor', 'patch'];
   const repository = git(process.cwd());
-  const version = (await readPkg()).version;
+  const packageJson = await readPkg();
+  const version = packageJson.version;
   const branchName = (await repository.status()).current;
 
   let versionIncrease: any = 'patch';
@@ -43,7 +44,7 @@ const releaseCommand = async (
   repository.checkoutLocalBranch(releaseBranch);
 
   // Writes version number in package.json
-  writePkg({ version: nextVersion });
+  writePkg({ ...packageJson, version: nextVersion });
 
   await repository.add('package.json');
   // await repository.commit('package.json');
