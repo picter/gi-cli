@@ -23,6 +23,7 @@ const releaseCommand = async (
   const version = packageJson.version;
   const branchName = (await repository.status()).current;
 
+  // TODO: check how to do this better with yargs (excluding parameters with in same variable)
   let versionIncrease: any = 'patch';
   if (args.major) {
     versionIncrease = 'major';
