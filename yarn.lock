@@ -151,9 +151,9 @@
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@types/write-pkg/-/write-pkg-3.1.0.tgz#f58767f4fb9a6a3ad8e95d3e9cd1f2d026ceab26"
 
-"@types/yargs@^8.0.0":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-8.0.2.tgz#0f9c7b236e2d78cd8f4b6502de15d0728aa29385"
+"@types/yargs@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-11.0.0.tgz#124b9ed9c65b7091cc36da59ae12cbd47d8745ea"
 
 abab@^1.0.4:
   version "1.0.4"
