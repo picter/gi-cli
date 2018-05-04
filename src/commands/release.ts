@@ -49,8 +49,7 @@ const releaseCommand = async (
   writePkg({ ...packageJson, version: versionIncrease });
 
   await repository.add('package.json');
-  // TODO: checkout api of simplegit to commit changes with proper commit message
-  // await repository.commit('package.json');
+  await repository.commit(`Release v${versionIncrease}`);
 
   const projectUrl = `https://github.com/${project.scope}/${project.name}`;
   const url = `${projectUrl}/compare/${productionBranchname}...${releaseBranch}`; // Use new branch name
