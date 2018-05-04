@@ -45,6 +45,13 @@ const buildPullRequestUrl = (
   }/compare/${productionBranch}...${releaseBranch}`;
 
 describe('release command', () => {
+  // TODO: Complete this tests, could not make it work
+  // You can use to mock the different branches
+  //    - .mockResolvedValueOnce({ current: productionBranch })
+  //    - .mockResolvedValueOnce({ current: 'random' })
+  // it('throws an error when executed inside the release branch', () => {});
+  // it('shows a warning message when not executed inside the master branch', () => {});
+
   describe('when receives a specific version number', () => {
     const releaseBranch = `release-${version}`;
 
