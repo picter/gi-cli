@@ -5,7 +5,7 @@ import * as readPkg from 'read-pkg';
 import * as semver from 'semver';
 import * as writePkg from 'write-pkg';
 
-const productionBranchname = 'production';
+const productionBranchname = 'release';
 
 const releaseCommand = async (
   command: string,
