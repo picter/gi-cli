@@ -5,11 +5,13 @@ import release from './release';
 const mockAdd = jest.fn();
 const mockCheckoutLocalBranch = jest.fn();
 const mockCommit = jest.fn();
+const mockPush = jest.fn();
 jest.mock('simple-git/promise', () => (pwd: string) => {
   return {
     add: mockAdd,
     checkoutLocalBranch: mockCheckoutLocalBranch,
     commit: mockCommit,
+    push: mockPush,
     status: jest
       .fn()
       .mockResolvedValueOnce({ current: 'master' })
@@ -38,19 +40,20 @@ const buildPullRequestUrl = (
     project.name
   }/compare/${productionBranch}...${releaseBranch}`;
 
-describe('release command', () => {
-  const project = {
-    name: 'project',
-    scope: 'picter',
-  };
-  const argv = { _: [], $0: '', version: '' };
-  const token = '';
+const project = {
+  name: 'project',
+  scope: 'picter',
+};
+const productionBranch = 'release';
+const argv = { _: [], $0: '', newVersion: '' };
+const token = '';
 
+describe('release command', () => {
   describe('when receives a specific version number', () => {
     const releaseBranch = `release-${version}`;
 
     beforeAll(() => {
-      argv.version = version;
+      argv.newVersion = version;
       release('release', project, argv, token);
     });
 
@@ -66,7 +69,7 @@ describe('release command', () => {
     it('calls "opn" with the pull request url', () => {
       const pullRequestUrl = buildPullRequestUrl(
         project,
-        'production',
+        productionBranch,
         releaseBranch,
       );
       expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
