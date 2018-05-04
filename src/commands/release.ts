@@ -21,7 +21,12 @@ const releaseCommand = async (
   const version = (await readPkg()).version;
   const branchName = (await repository.status()).current;
 
-  let nextVersion = command;
+  let versionIncrease: any = 'patch';
+  if (args.major) {
+    versionIncrease = 'major';
+  } else if (args.minor) {
+    versionIncrease = 'minor';
+  }
 
   if (branchName === productionBranchname) {
     throw new Error(
@@ -31,9 +36,7 @@ const releaseCommand = async (
     console.error('WARNING: You should release from master branch.');
   }
 
-  if (SEMVER_LEVELS.indexOf(nextVersion) !== -1) {
-    nextVersion = semver.inc(version, nextVersion);
-  }
+  const nextVersion = semver.inc(version, versionIncrease);
 
   // Checkout new branch `release-x.y.z`
   const releaseBranch = `release-${nextVersion}`;
