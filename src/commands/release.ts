@@ -34,7 +34,7 @@ const releaseCommand = async (
     versionIncrease = semver.inc(version, versionIncrease);
   }
 
-  if (!!semver.valid(versionIncrease)) {
+  if (!semver.valid(versionIncrease)) {
     throw new Error(
       `Version "${versionIncrease}" does not comply with semver.`,
     );
