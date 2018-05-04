@@ -9,6 +9,7 @@ jest.mock('simple-git/promise', () => (pwd: string) => {
   return {
     add: mockAdd,
     checkoutLocalBranch: mockCheckoutLocalBranch,
+    commit: mockCommit,
     status: jest
       .fn()
       .mockResolvedValueOnce({ current: 'master' })
