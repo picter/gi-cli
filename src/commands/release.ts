@@ -48,6 +48,7 @@ const releaseCommand = async (
 
   await repository.add('package.json');
   await repository.commit(`Release v${versionIncrease}`);
+  await repository.push('origin', releaseBranch, { '--set-upstream': true });
 
   const projectUrl = `https://github.com/${project.scope}/${project.name}`;
   const url = `${projectUrl}/compare/${productionBranchname}...${releaseBranch}`; // Use new branch name
