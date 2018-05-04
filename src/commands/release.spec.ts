@@ -78,12 +78,6 @@ describe('release command', () => {
     it(`commits with "Release v1.1.1" message`, () => {
       expect(mockCommit).toHaveBeenCalledWith(`Release v${version}`);
     });
-
-    afterAll(() => {
-      mockCheckoutLocalBranch.mockClear();
-      mockOpn.mockClear();
-      mockWritePkg.mockClear();
-    });
   });
 
   describe('when called with major, minor or patch level', () => {
@@ -119,12 +113,6 @@ describe('release command', () => {
 
     it(`commits with "Release v2.0.0" message`, () => {
       expect(mockCommit).toHaveBeenCalledWith(`Release v${majorVersion}`);
-    });
-
-    afterAll(() => {
-      mockCheckoutLocalBranch.mockClear();
-      mockOpn.mockClear();
-      mockWritePkg.mockClear();
     });
   });
 });
