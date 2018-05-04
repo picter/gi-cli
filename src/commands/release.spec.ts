@@ -90,119 +90,45 @@ describe('release command', () => {
     });
   });
 
-  describe('when called with semver', () => {
-    describe('major level', () => {
-      const majorVersion = '2.0.0';
-      const releaseBranch = `release-${majorVersion}`;
+  describe('when called with major, minor or patch level', () => {
+    const majorVersion = '2.0.0';
+    const releaseBranch = `release-${majorVersion}`;
 
-      beforeAll(() => {
-        argv.version = majorVersion;
-        release('release', project, argv, token);
-      });
-
-      it(`creates a new branch with "release-2.0.0"`, () => {
-        expect(mockCheckoutLocalBranch).toHaveBeenCalledWith(releaseBranch);
-      });
-
-      it('writes the version to package.json', () => {
-        const packageJson = { version: majorVersion };
-        expect(mockWritePkg).toHaveBeenCalledWith(packageJson);
-      });
-
-      it('calls "opn" with the pull request url', () => {
-        const pullRequestUrl = buildPullRequestUrl(
-          project,
-          'production',
-          releaseBranch,
-        );
-        expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
-      });
-
-      it('adds "package.json" to staging', () => {
-        expect(mockAdd).toHaveBeenCalledWith('package.json');
-      });
-
-      it(`commits with "Release v2.0.0" message`, () => {
-        expect(mockCommit).toHaveBeenCalledWith(`Release v${majorVersion}`);
-      });
-
-      afterAll(() => {
-        mockCheckoutLocalBranch.mockClear();
-        mockOpn.mockClear();
-        mockWritePkg.mockClear();
-      });
+    beforeAll(() => {
+      argv.newVersion = majorVersion;
+      release('release', project, argv, token);
     });
 
-    describe('minor level', () => {
-      const minorVersion = '1.2.0';
-      const releaseBranch = `release-${minorVersion}`;
-
-      beforeAll(() => {
-        argv.version = minorVersion;
-        release('release', project, argv, token);
-      });
-
-      it(`creates a new branch with "release-1.2.0"`, () => {
-        expect(mockCheckoutLocalBranch).toHaveBeenCalledWith(releaseBranch);
-      });
-
-      it('writes the version to package.json', () => {
-        const packageJson = { version: minorVersion };
-        expect(mockWritePkg).toHaveBeenCalledWith(packageJson);
-      });
-
-      it('calls "opn" with the pull request url', () => {
-        const pullRequestUrl = buildPullRequestUrl(
-          project,
-          'production',
-          releaseBranch,
-        );
-        expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
-      });
-
-      it('adds "package.json" to staging', () => {
-        expect(mockAdd).toHaveBeenCalledWith('package.json');
-      });
-
-      it(`commits with "Release v1.2.0" message`, () => {
-        expect(mockCommit).toHaveBeenCalledWith(`Release v${minorVersion}`);
-      });
+    it(`creates a new branch with "release-2.0.0"`, () => {
+      expect(mockCheckoutLocalBranch).toHaveBeenCalledWith(releaseBranch);
     });
 
-    describe('patch level', () => {
-      const patchVersion = '1.1.2';
-      const releaseBranch = `release-${patchVersion}`;
+    it('writes the version to package.json', () => {
+      const packageJson = { version: majorVersion };
+      expect(mockWritePkg).toHaveBeenCalledWith(packageJson);
+    });
 
-      beforeAll(() => {
-        argv.version = patchVersion;
-        release('release', project, argv, token);
-      });
+    it('calls "opn" with the pull request url', () => {
+      const pullRequestUrl = buildPullRequestUrl(
+        project,
+        productionBranch,
+        releaseBranch,
+      );
+      expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
+    });
 
-      it(`creates a new branch with "release-1.1.2"`, () => {
-        expect(mockCheckoutLocalBranch).toHaveBeenCalledWith(releaseBranch);
-      });
+    it('adds "package.json" to staging', () => {
+      expect(mockAdd).toHaveBeenCalledWith('package.json');
+    });
 
-      it('writes the version to package.json', () => {
-        const packageJson = { version: patchVersion };
-        expect(mockWritePkg).toHaveBeenCalledWith(packageJson);
-      });
+    it(`commits with "Release v2.0.0" message`, () => {
+      expect(mockCommit).toHaveBeenCalledWith(`Release v${majorVersion}`);
+    });
 
-      it('calls "opn" with the pull request url', () => {
-        const pullRequestUrl = buildPullRequestUrl(
-          project,
-          'production',
-          releaseBranch,
-        );
-        expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
-      });
-
-      it('adds "package.json" to staging', () => {
-        expect(mockAdd).toHaveBeenCalledWith('package.json');
-      });
-
-      it(`commits with "Release v${version}" message`, () => {
-        expect(mockCommit).toHaveBeenCalledWith(`Release v${patchVersion}`);
-      });
+    afterAll(() => {
+      mockCheckoutLocalBranch.mockClear();
+      mockOpn.mockClear();
+      mockWritePkg.mockClear();
     });
   });
 });
