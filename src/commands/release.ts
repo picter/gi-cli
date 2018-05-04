@@ -20,7 +20,7 @@ const releaseCommand = async (
 
   if (branchName === productionBranchname) {
     throw new Error(
-      `Cannot create release for ${productionBranchname} branch.`,
+      `Cannot create release for "${productionBranchname}" branch.`,
     );
   } else if (branchName !== 'master') {
     console.error('WARNING: You should release from master branch.');
