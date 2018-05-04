@@ -11,7 +11,7 @@ const validateVersion = (version: string) =>
   !!semver.valid(version) || false;
 
 const releaseCommand = async (
-  command: any /* ask Richard about this */,
+  command: string,
   project: any,
   args: Arguments,
   authToken: string,
