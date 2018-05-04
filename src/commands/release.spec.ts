@@ -95,7 +95,7 @@ describe('release command', () => {
     const releaseBranch = `release-${majorVersion}`;
 
     beforeAll(() => {
-      argv.newVersion = majorVersion;
+      argv.newVersion = 'major';
       release('release', project, argv, token);
     });
 
