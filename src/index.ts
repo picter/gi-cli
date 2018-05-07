@@ -23,6 +23,13 @@ const argv = yargs
       }),
   )
   .command(['pr', 'merge'], 'Create pull/merge request for current branch.')
+  .command('release [new-version]', 'Release current branch.', y =>
+    y.positional('new-version', {
+      describe: 'The release version semver valid number or type.',
+      type: 'string',
+      default: 'patch',
+    }),
+  )
   .help().argv;
 
 const authToken = config['github.com'].token;
