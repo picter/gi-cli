@@ -2,6 +2,13 @@ import axios from 'axios';
 
 import { baseUrl } from './config';
 
+// tslint:disable-next-line interface-name
+export interface GithubIssue {
+  number: number;
+  state: string;
+  title: string;
+}
+
 export const getIssues = async (project: any, authToken: any) => {
   const response = await axios.post(
     `${baseUrl}/graphql`,
@@ -28,7 +35,7 @@ export const getIssues = async (project: any, authToken: any) => {
   );
   if (response.data) {
     return response.data.data.repository.issues.edges.map(
-      (node: any) => node.node,
+      (node: any): GithubIssue => node.node,
     );
   }
   return response;
