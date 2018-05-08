@@ -29,7 +29,7 @@ const showIssueSelector = async (
       value: issue,
     }));
 
-  const answers = await prompt([
+  const answers: any = await prompt([
     {
       type: 'list',
       name: 'issue',

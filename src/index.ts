@@ -8,7 +8,7 @@ if (!configFileExists()) {
   throw new Error(`No config file found at ${configPath}.`);
 }
 
-const config = loadConfigFile();
+const config: any = loadConfigFile();
 
 const argv = yargs
   .usage('gi [command]')
