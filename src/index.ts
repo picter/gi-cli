@@ -1,7 +1,7 @@
 import * as yargs from 'yargs';
 
 import { list as commandList, selectCommand } from './commands';
-import { configPath, configFileExists, loadConfigFile } from './config';
+import { configFileExists, configPath, loadConfigFile } from './config';
 import detectRemote from './remotes';
 
 if (!configFileExists()) {
@@ -18,16 +18,16 @@ const argv = yargs
       .option('all', { describe: 'Show all issues', default: false })
       .option('interactive', {
         alias: 'i',
-        describe: 'Show interactive list',
         default: false,
+        describe: 'Show interactive list',
       }),
   )
   .command(['pr', 'merge'], 'Create pull/merge request for current branch.')
   .command('release [new-version]', 'Release current branch.', y =>
     y.positional('new-version', {
+      default: 'patch',
       describe: 'The release version semver valid number or type.',
       type: 'string',
-      default: 'patch',
     }),
   )
   .help().argv;
