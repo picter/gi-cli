@@ -12,6 +12,7 @@
     "prebuild": "rimraf dist",
     "start": "ts-node .",
     "build": "tsc",
+    "lint": "tslint --project .",
     "test": "jest ",
     "test:watch": "jest --watch"
   },
