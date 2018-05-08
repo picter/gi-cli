@@ -1,11 +1,11 @@
 jest.mock('os');
 jest.mock('fs');
 
-const os = require('os');
+const os = require('os'); // tslint:disable-line no-var-requires
 os.homedir = jest.fn();
 os.homedir.mockReturnValue('/Users/gi-demo-cf07295117d2');
 
-const fs = require('fs');
+const fs = require('fs'); // tslint:disable-line no-var-requires
 fs.existsSync = jest.fn();
 fs.existsSync.mockReturnValue(false);
 fs.readFileSync = jest.fn();
@@ -15,7 +15,7 @@ github.com:
   token: e971086be50a
 `);
 
-import { configPath, configFileExists, loadConfigFile } from '.';
+import { configFileExists, configPath, loadConfigFile } from '.';
 
 test('Config path is within user home directory.', () => {
   expect(configPath).toEqual('/Users/gi-demo-cf07295117d2/.gi.yaml');
