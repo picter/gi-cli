@@ -6,7 +6,7 @@ node_js:
 jobs:
   include:
     script: yarn test
-    script:
+    script: yarn lint
 
 notifications:
   email: false
