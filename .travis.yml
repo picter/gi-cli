@@ -3,8 +3,10 @@ language: node_js
 node_js:
   - "9"
 
-script:
-  - yarn test
+jobs:
+  include:
+    script: yarn test
+    script:
 
 notifications:
   email: false
