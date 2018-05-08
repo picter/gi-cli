@@ -13,7 +13,7 @@ const releaseCommand = async (
   args: Arguments,
   authToken: string,
 ) => {
-  const SEMVER_LEVELS: Array<String> = ['major', 'minor', 'patch'];
+  const SEMVER_LEVELS: string[] = ['major', 'minor', 'patch'];
   const repository = git(process.cwd());
   const packageJson = await readPkg();
   const branchName = (await repository.status()).current;
