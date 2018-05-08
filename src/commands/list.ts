@@ -1,7 +1,8 @@
-import { Arguments } from 'yargs';
 import { prompt } from 'inquirer';
-import { getIssues } from '../github';
+import { Arguments } from 'yargs';
+
 import { checkout } from '../git';
+import { getIssues } from '../github';
 
 const printIssues = (issues: Array<Object>, args: Arguments) => {
   issues.map((issue: any) => {
@@ -26,11 +27,11 @@ const showIssueSelector = async (issues: Array<Object>, args: Arguments) => {
 
   const answers = await prompt([
     {
-      type: 'list',
-      name: 'issue',
-      message: 'Checkout branch for issue:',
-      paginated: true,
       choices,
+      message: 'Checkout branch for issue:',
+      name: 'issue',
+      paginated: true,
+      type: 'list',
     },
   ]);
 

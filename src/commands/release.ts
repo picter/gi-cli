@@ -1,9 +1,9 @@
-import { Arguments } from 'yargs';
-import * as git from 'simple-git/promise';
 import * as opn from 'opn';
 import * as readPkg from 'read-pkg';
 import * as semver from 'semver';
+import * as git from 'simple-git/promise'; // tslint:disable-line no-submodule-imports
 import * as writePkg from 'write-pkg';
+import { Arguments } from 'yargs';
 
 const productionBranchname = 'release';
 

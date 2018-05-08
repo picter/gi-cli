@@ -1,6 +1,6 @@
-import { Arguments } from 'yargs';
 import * as opn from 'opn';
-import * as git from 'simple-git/promise';
+import * as git from 'simple-git/promise'; // tslint:disable-line no-submodule-imports
+import { Arguments } from 'yargs';
 
 const pullRequestCommand = async (
   command: string,
