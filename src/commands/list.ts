@@ -2,9 +2,9 @@ import { prompt } from 'inquirer';
 import { Arguments } from 'yargs';
 
 import { checkout } from '../git';
-import { getIssues } from '../github';
+import { getIssues, GithubIssue } from '../github';
 
-const printIssues = (issues: Array<Object>, args: Arguments) => {
+const printIssues = (issues: GithubIssue[], args: Arguments) => {
   issues.map((issue: any) => {
     if (args.all || issue.state === 'OPEN') {
       console.log(
@@ -15,7 +15,7 @@ const printIssues = (issues: Array<Object>, args: Arguments) => {
   });
 };
 
-const showIssueSelector = async (issues: Array<Object>, args: Arguments) => {
+const showIssueSelector = async (issues: GithubIssue[], args: Arguments) => {
   const choices = issues
     .filter((issue: any) => args.all || issue.state === 'OPEN')
     .map((issue: any) => ({
