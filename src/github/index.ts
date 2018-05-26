@@ -3,10 +3,16 @@ import axios from 'axios';
 import { baseUrl } from './config';
 
 // tslint:disable-next-line interface-name
+export interface GithubUser {
+  login: string;
+}
+
+// tslint:disable-next-line interface-name
 export interface GithubIssue {
   number: number;
   state: string;
   title: string;
+  assignees: GithubUser[];
 }
 
 export const getUserLogin = async (authToken: any) => {
@@ -59,8 +65,13 @@ export const getIssues = async (project: any, authToken: any) => {
     },
   );
   if (response.data) {
-    return response.data.data.repository.issues.edges.map(
-      (node: any): GithubIssue => node.node,
+    return response.data.data.repository.issues.nodes.map(
+      (node: any): GithubIssue => ({
+        ...node,
+        assignees: node.assignees.nodes.map(
+          (assignee: any): GithubUser => assignee,
+        ),
+      }),
     );
   }
   return response;
