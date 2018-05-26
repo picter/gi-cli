@@ -6,7 +6,7 @@ const unknownCommand = async (
   args: Arguments,
   authToken: string,
 ) => {
-  console.log(`Unkown command "${command}".`);
+  console.log(`Unknown command "${command}".`);
 };
 
 export default unknownCommand;
