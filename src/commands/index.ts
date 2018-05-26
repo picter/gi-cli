@@ -1,5 +1,5 @@
-import list from './list';
 import checkout from './checkout';
+import list from './list';
 import merge from './merge';
 import release from './release';
 import unknown from './unknown';

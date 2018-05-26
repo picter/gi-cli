@@ -1,9 +1,9 @@
-import { Arguments } from 'yargs';
-import * as git from 'simple-git/promise';
 import * as opn from 'opn';
 import * as readPkg from 'read-pkg';
 import * as semver from 'semver';
+import * as git from 'simple-git/promise'; // tslint:disable-line no-submodule-imports
 import * as writePkg from 'write-pkg';
+import { Arguments } from 'yargs';
 
 const productionBranchname = 'release';
 
@@ -13,7 +13,7 @@ const releaseCommand = async (
   args: Arguments,
   authToken: string,
 ) => {
-  const SEMVER_LEVELS: Array<String> = ['major', 'minor', 'patch'];
+  const SEMVER_LEVELS: string[] = ['major', 'minor', 'patch'];
   const repository = git(process.cwd());
   const packageJson = await readPkg();
   const branchName = (await repository.status()).current;

@@ -1,20 +1,21 @@
-import { Arguments } from 'yargs';
 import { prompt } from 'inquirer';
-import { getIssues } from '../github';
-import { checkout } from '../git';
+import { Arguments } from 'yargs';
 
-const printIssues = (issues: Array<Object>, args: Arguments) => {
+import { checkout } from '../git';
+import { getIssues, GithubIssue } from '../github';
+
+const printIssues = (issues: GithubIssue[], args: Arguments) => {
   issues.map((issue: any) => {
     if (args.all || issue.state === 'OPEN') {
       console.log(
         `${issue.number} - ${issue.title}` +
-          (args.all ? ` (${issue.state})` : ''),
+        (args.all ? ` (${issue.state})` : ''),
       );
     }
   });
 };
 
-const showIssueSelector = async (issues: Array<Object>, args: Arguments) => {
+const showIssueSelector = async (issues: GithubIssue[], args: Arguments) => {
   const choices = issues
     .filter((issue: any) => args.all || issue.state === 'OPEN')
     .map((issue: any) => ({
@@ -26,11 +27,11 @@ const showIssueSelector = async (issues: Array<Object>, args: Arguments) => {
 
   const answers: any = await prompt([
     {
-      type: 'list',
-      name: 'issue',
-      message: 'Checkout branch for issue:',
-      paginated: true,
       choices,
+      message: 'Checkout branch for issue:',
+      name: 'issue',
+      paginated: true,
+      type: 'list',
     },
   ]);
 

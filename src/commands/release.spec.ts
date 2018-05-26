@@ -35,15 +35,6 @@ jest.mock('simple-git/promise', () => (pwd: string) => {
   };
 });
 
-const buildPullRequestUrl = (
-  project: any,
-  productionBranch: string,
-  releaseBranch: string,
-) =>
-  `https://github.com/${project.scope}/${
-    project.name
-  }/compare/${productionBranch}...${releaseBranch}`;
-
 describe('release command', () => {
   // TODO: Complete this tests, could not make it work
   // You can use to mock the different branches
@@ -70,12 +61,7 @@ describe('release command', () => {
     });
 
     it('calls "opn" with the pull request url', () => {
-      const pullRequestUrl = buildPullRequestUrl(
-        project,
-        productionBranch,
-        releaseBranch,
-      );
-      expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
+      expect(mockOpn).toMatchSnapshot();
     });
 
     it('adds "package.json" to staging', () => {
@@ -106,12 +92,7 @@ describe('release command', () => {
     });
 
     it('calls "opn" with the pull request url', () => {
-      const pullRequestUrl = buildPullRequestUrl(
-        project,
-        productionBranch,
-        releaseBranch,
-      );
-      expect(mockOpn).toHaveBeenCalledWith(pullRequestUrl);
+      expect(mockOpn).toMatchSnapshot();
     });
 
     it('adds "package.json" to staging', () => {

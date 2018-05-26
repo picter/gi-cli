@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`release command when called with major, minor or patch level calls "opn" with the pull request url 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "https://github.com/picter/project/compare/release...release-1.1.1",
+    ],
+    Array [
+      "https://github.com/picter/project/compare/release...release-2.0.0",
+    ],
+  ],
+}
+`;
+
+exports[`release command when receives a specific version number calls "opn" with the pull request url 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "https://github.com/picter/project/compare/release...release-1.1.1",
+    ],
+  ],
+}
+`;

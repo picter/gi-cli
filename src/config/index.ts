@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'fs';
-import { join } from 'path';
-import { homedir } from 'os';
 import { safeLoad } from 'js-yaml';
+import { homedir } from 'os';
+import { join } from 'path';
 
 export const configPath = join(homedir(), '.gi.yaml');
 

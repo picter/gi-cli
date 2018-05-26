@@ -1,5 +1,5 @@
+import * as git from 'simple-git/promise'; // tslint:disable-line no-submodule-imports
 import * as slugify from 'slugify';
-import * as git from 'simple-git/promise';
 
 interface Issue {
   number: number;
@@ -9,8 +9,8 @@ interface Issue {
 
 export const slugifyTitle = (title: string) =>
   slugify(title, {
-    remove: /[$*_+~^,.()'"`!/\-:;@]/g,
     lower: true,
+    remove: /[$*_+~^,.()'"`!/\-:;@]/g,
   });
 
 export const checkout = async (issue: Issue) => {

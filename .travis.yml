@@ -3,8 +3,15 @@ language: node_js
 node_js:
   - "9"
 
-script:
-  - yarn test
+cache:
+  yarn: true
+  directories:
+    - "node_modules"
+
+jobs:
+  include:
+    - script: yarn test
+    - script: yarn lint
 
 notifications:
   email: false
