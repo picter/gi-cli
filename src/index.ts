@@ -16,6 +16,11 @@ const argv = yargs
   .command('list', 'Lists all open issues of this project.', y =>
     y
       .option('all', { describe: 'Show all issues', default: false })
+      .option('assigned', {
+        alias: 'a',
+        default: false,
+        describe: 'Show only assigned issues',
+      })
       .option('interactive', {
         alias: 'i',
         default: false,
