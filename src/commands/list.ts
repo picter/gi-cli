@@ -2,7 +2,7 @@ import { prompt } from 'inquirer';
 import { Arguments } from 'yargs';
 
 import { checkout } from '../git';
-import { getIssues, GithubIssue } from '../github';
+import { getIssues, getUserLogin, GithubIssue, GithubUser } from '../github';
 
 const printIssues = (issues: GithubIssue[], args: Arguments) =>
   issues
@@ -14,6 +14,25 @@ const printIssues = (issues: GithubIssue[], args: Arguments) =>
       );
     });
 
+const printAssignedIssues = (
+  issues: GithubIssue[],
+  user: GithubUser,
+  args: Arguments,
+) => {
+  issues
+    .filter(
+      (issue: any) =>
+        (args.all || issue.state === 'OPEN') &&
+        issue.assignees.some(
+          (assignee: GithubUser) => assignee.login === user.login,
+        ),
+    )
+    .map((issue: any) => {
+      console.log(
+        `${issue.number} - ${issue.title}` +
+          (args.all ? ` (${issue.state})` : ''),
+      );
+    });
 };
 
 const showIssueSelector = async (issues: GithubIssue[], args: Arguments) => {
