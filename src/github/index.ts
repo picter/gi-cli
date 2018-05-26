@@ -36,18 +36,21 @@ export const getIssues = async (project: any, authToken: any) => {
     `${baseUrl}/graphql`,
     {
       query: `{
-      repository(owner: "${project.scope}", name: "${project.name}") {
-        issues(last: 100) {
-          edges {
-            node {
+        repository(owner: "${project.scope}", name: "${project.name}") {
+          issues(last: 100) {
+            nodes {
               number,
               state,
               title
+              assignees(last: 100) {
+                nodes {
+                  login
+                }
+              }
             }
           }
         }
-      }
-    },`,
+      }`,
     },
     {
       headers: {
