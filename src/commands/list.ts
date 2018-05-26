@@ -65,8 +65,13 @@ const listCommand = async (
   authToken: string,
 ) => {
   const issues = await getIssues(project, authToken);
+
   if (args.interactive) {
     return showIssueSelector(issues, args);
+  }
+  if (args.assigned) {
+    const user = await getUserLogin(authToken);
+    return printAssignedIssues(issues, user, args);
   }
   return printIssues(issues, args);
 };
