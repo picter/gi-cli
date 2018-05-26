@@ -4,15 +4,16 @@ import { Arguments } from 'yargs';
 import { checkout } from '../git';
 import { getIssues, GithubIssue } from '../github';
 
-const printIssues = (issues: GithubIssue[], args: Arguments) => {
-  issues.map((issue: any) => {
-    if (args.all || issue.state === 'OPEN') {
+const printIssues = (issues: GithubIssue[], args: Arguments) =>
+  issues
+    .filter((issue: any) => args.all || issue.state === 'OPEN')
+    .map((issue: any) => {
       console.log(
         `${issue.number} - ${issue.title}` +
           (args.all ? ` (${issue.state})` : ''),
       );
-    }
-  });
+    });
+
 };
 
 const showIssueSelector = async (issues: GithubIssue[], args: Arguments) => {
