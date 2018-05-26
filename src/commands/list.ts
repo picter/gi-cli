@@ -9,7 +9,7 @@ const printIssues = (issues: GithubIssue[], args: Arguments) => {
     if (args.all || issue.state === 'OPEN') {
       console.log(
         `${issue.number} - ${issue.title}` +
-          (args.all ? ` (${issue.state})` : ''),
+        (args.all ? ` (${issue.state})` : ''),
       );
     }
   });
@@ -25,7 +25,7 @@ const showIssueSelector = async (issues: GithubIssue[], args: Arguments) => {
       value: issue,
     }));
 
-  const answers = await prompt([
+  const answers: any = await prompt([
     {
       choices,
       message: 'Checkout branch for issue:',
