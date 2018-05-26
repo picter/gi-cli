@@ -9,6 +9,28 @@ export interface GithubIssue {
   title: string;
 }
 
+export const getUserLogin = async (authToken: any) => {
+  const response = await axios.post(
+    `${baseUrl}/graphql`,
+    {
+      query: `{
+        viewer {
+          login
+        }
+      }`,
+    },
+    {
+      headers: {
+        Authorization: `bearer ${authToken}`,
+      },
+    },
+  );
+  if (response.data) {
+    return response.data.data.viewer;
+  }
+  return response;
+};
+
 export const getIssues = async (project: any, authToken: any) => {
   const response = await axios.post(
     `${baseUrl}/graphql`,
