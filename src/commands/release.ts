@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+import { prompt } from 'inquirer';
 import * as opn from 'opn';
 import * as readPkg from 'read-pkg';
 import * as semver from 'semver';
@@ -5,7 +7,7 @@ import * as git from 'simple-git/promise'; // tslint:disable-line no-submodule-i
 import * as writePkg from 'write-pkg';
 import { Arguments } from 'yargs';
 
-const productionBranchname = 'release';
+const productionBranch = 'release';
 
 const releaseCommand = async (
   command: string,
@@ -16,14 +18,11 @@ const releaseCommand = async (
   const SEMVER_LEVELS: string[] = ['major', 'minor', 'patch'];
   const repository = git(process.cwd());
   const packageJson = await readPkg();
-  const branchName = (await repository.status()).current;
-
-  if (branchName === productionBranchname) {
-    throw new Error(
-      `Cannot create release for "${productionBranchname}" branch.`,
-    );
-  } else if (branchName !== 'master') {
-    console.error('WARNING: You should release from master branch.');
+  const branch = (await repository.status()).current;
+  if (branch === productionBranch) {
+    throw new Error(`Cannot create release for "${productionBranch}" branch.`);
+  } else if (branch !== 'master') {
+    console.error(chalk.red('WARNING: You should release from master branch.'));
   }
 
   let versionIncrease = args.newVersion;
@@ -38,22 +37,44 @@ const releaseCommand = async (
     );
   }
 
-  // Checkout new branch `release-x.y.z`
   const releaseBranch = `release-${versionIncrease}`;
-  repository.checkoutLocalBranch(releaseBranch);
 
-  // Writes version number in package.json
-  packageJson.version = versionIncrease;
-  await writePkg(packageJson);
+  console.log(chalk`
+    {underline Release will do the following:}
 
-  await repository.add('package.json');
-  await repository.commit(`Release v${versionIncrease}`);
-  await repository.push('origin', releaseBranch, { '--set-upstream': true });
+    1. Create local {yellow branch}: {green "${releaseBranch}"}.
+    2. Bump {yellow package.json version}: {green "${versionIncrease}"}.
+    3. Create new {yellow commit}: {green "Release v${versionIncrease}"}.
+    4. Push to {yellow remote repository}.
+    5. Open a {yellow pull request} url: {green "${productionBranch}...${releaseBranch}"}.
+  `);
 
-  const projectUrl = `https://github.com/${project.scope}/${project.name}`;
-  const url = `${projectUrl}/compare/${productionBranchname}...${releaseBranch}`; // Use new branch name
+  const answers: any = await prompt([
+    {
+      default: false,
+      message: 'Wish to continue?',
+      name: 'execute',
+      type: 'confirm',
+    },
+  ]);
 
-  await opn(url, { wait: false });
+  if (answers.execute) {
+    // Checkout new branch `release-x.y.z`
+    repository.checkoutLocalBranch(releaseBranch);
+
+    // Writes version number in package.json
+    packageJson.version = versionIncrease;
+    await writePkg(packageJson);
+
+    await repository.add('package.json');
+    await repository.commit(`Release v${versionIncrease}`);
+    await repository.push('origin', releaseBranch, { '--set-upstream': true });
+
+    const projectUrl = `https://github.com/${project.scope}/${project.name}`;
+    const url = `${projectUrl}/compare/${productionBranch}...${releaseBranch}`; // Use new branch name
+
+    await opn(url, { wait: false });
+  }
 };
 
 export default releaseCommand;
