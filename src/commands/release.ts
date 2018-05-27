@@ -1,3 +1,4 @@
+import { prompt } from 'inquirer';
 import * as opn from 'opn';
 import * as readPkg from 'read-pkg';
 import * as semver from 'semver';
@@ -35,22 +36,36 @@ const releaseCommand = async (
     );
   }
 
-  // Checkout new branch `release-x.y.z`
   const releaseBranch = `release-${versionIncrease}`;
-  repository.checkoutLocalBranch(releaseBranch);
 
-  // Writes version number in package.json
-  packageJson.version = versionIncrease;
-  await writePkg(packageJson);
 
-  await repository.add('package.json');
-  await repository.commit(`Release v${versionIncrease}`);
-  await repository.push('origin', releaseBranch, { '--set-upstream': true });
 
-  const projectUrl = `https://github.com/${project.scope}/${project.name}`;
-  const url = `${projectUrl}/compare/${productionBranchname}...${releaseBranch}`; // Use new branch name
+  const answers: any = await prompt([
+    {
+      default: false,
+      message: 'Wish to continue?',
+      name: 'execute',
+      type: 'confirm',
+    },
+  ]);
 
-  await opn(url, { wait: false });
+  if (answers.execute) {
+    // Checkout new branch `release-x.y.z`
+    repository.checkoutLocalBranch(releaseBranch);
+
+    // Writes version number in package.json
+    packageJson.version = versionIncrease;
+    await writePkg(packageJson);
+
+    await repository.add('package.json');
+    await repository.commit(`Release v${versionIncrease}`);
+    await repository.push('origin', releaseBranch, { '--set-upstream': true });
+
+    const projectUrl = `https://github.com/${project.scope}/${project.name}`;
+    const url = `${projectUrl}/compare/${productionBranch}...${releaseBranch}`; // Use new branch name
+
+    await opn(url, { wait: false });
+  }
 };
 
 export default releaseCommand;
