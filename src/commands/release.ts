@@ -5,7 +5,7 @@ import * as git from 'simple-git/promise'; // tslint:disable-line no-submodule-i
 import * as writePkg from 'write-pkg';
 import { Arguments } from 'yargs';
 
-const productionBranchname = 'release';
+const productionBranch = 'release';
 
 const releaseCommand = async (
   command: string,
@@ -16,14 +16,11 @@ const releaseCommand = async (
   const SEMVER_LEVELS: string[] = ['major', 'minor', 'patch'];
   const repository = git(process.cwd());
   const packageJson = await readPkg();
-  const branchName = (await repository.status()).current;
-
-  if (branchName === productionBranchname) {
-    throw new Error(
-      `Cannot create release for "${productionBranchname}" branch.`,
-    );
-  } else if (branchName !== 'master') {
-    console.error('WARNING: You should release from master branch.');
+  const branch = (await repository.status()).current;
+  if (branch === productionBranch) {
+    throw new Error(`Cannot create release for "${productionBranch}" branch.`);
+  } else if (branch !== 'master') {
+    console.error(chalk.red('WARNING: You should release from master branch.'));
   }
 
   let versionIncrease = args.newVersion;
