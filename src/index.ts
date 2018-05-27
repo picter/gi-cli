@@ -13,7 +13,7 @@ const config: any = loadConfigFile();
 const argv = yargs
   .usage('gi [command]')
   .command('<issue number>', 'Checkout branch for issue number.')
-  .command('list', 'Lists all open issues of this project.', y =>
+  .command(['list', '$0'], 'Lists all open issues of this project.', y =>
     y
       .option('all', { describe: 'Show all issues', default: false })
       .option('assigned', {
