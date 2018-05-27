@@ -34,6 +34,9 @@ jest.mock('simple-git/promise', () => (pwd: string) => {
     status: mockStatus,
   };
 });
+jest.mock('inquirer', () => ({
+  prompt: jest.fn().mockResolvedValue({ execute: true }),
+}));
 
 describe('release command', () => {
   // TODO: Complete this tests, could not make it work
