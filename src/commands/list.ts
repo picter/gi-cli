@@ -9,7 +9,7 @@ const printIssues = (issues: GithubIssue[], args: Arguments) => {
     if (args.all || issue.state === 'OPEN') {
       console.log(
         `${issue.number} - ${issue.title}` +
-        (args.all ? ` (${issue.state})` : ''),
+          (args.all ? ` (${issue.state})` : ''),
       );
     }
   });
