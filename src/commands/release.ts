@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { prompt } from 'inquirer';
 import * as opn from 'opn';
 import * as readPkg from 'read-pkg';
@@ -38,7 +39,15 @@ const releaseCommand = async (
 
   const releaseBranch = `release-${versionIncrease}`;
 
+  console.log(chalk`
+    {underline Release will do the following:}
 
+    1. Create local {yellow branch}: {green "${releaseBranch}"}.
+    2. Bump {yellow package.json version}: {green "${versionIncrease}"}.
+    3. Create new {yellow commit}: {green "Release v${versionIncrease}"}.
+    4. Push to {yellow remote repository}.
+    5. Open a {yellow pull request} url: {green "${productionBranch}...${releaseBranch}"}.
+  `);
 
   const answers: any = await prompt([
     {
