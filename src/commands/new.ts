@@ -9,7 +9,7 @@ const newCommand = async (
   args: Arguments,
   authToken: string,
 ) => {
-  const issue: GithubIssue = await createIssue(args.issueTitle);
+  const issue = await createIssue(project, args.issueTitle, authToken);
   const url = `https://github.com/${project.scope}/${project.name}/issues/${
     issue.number
   }`;
