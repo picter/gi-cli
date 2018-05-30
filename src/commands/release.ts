@@ -17,7 +17,7 @@ const releaseCommand = async (
 ) => {
   const SEMVER_LEVELS: string[] = ['major', 'minor', 'patch'];
   const repository = git(process.cwd());
-  const packageJson = await readPkg();
+  const packageJson = await readPkg({ normalize: false });
   const branch = (await repository.status()).current;
   if (branch === productionBranch) {
     throw new Error(`Cannot create release for "${productionBranch}" branch.`);
