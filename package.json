@@ -60,6 +60,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "chalk": "^2.4.1",
+    "conventional-commits-parser": "^3.0.0",
     "inquirer": "^5.2.0",
     "js-yaml": "^3.9.1",
     "opn": "^5.1.0",
