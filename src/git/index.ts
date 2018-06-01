@@ -1,5 +1,6 @@
 import * as git from 'simple-git/promise'; // tslint:disable-line no-submodule-imports
 import * as slugify from 'slugify';
+import * as commitsParser from 'conventional-commits-parser';
 
 interface Issue {
   number: number;
@@ -23,4 +24,19 @@ export const checkout = async (issue: Issue) => {
   await repository.checkoutLocalBranch(branchName);
 
   console.log('Checkout', branchName);
+};
+
+export const getChangeLog = async (base: string) => {
+  const repository = git(process.cwd());
+  const status = await repository.status();
+  const log = await repository.log([`${base}..${status.current}`]);
+
+  console.log(log);
+
+  const commits = log
+    .all
+    .map((c: any) => [c.message, c.body].join('\n\n\n'))
+    .map(commitsParser.sync);
+
+  return commits;
 };

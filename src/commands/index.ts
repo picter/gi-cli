@@ -4,6 +4,8 @@ import merge from './merge';
 import release from './release';
 import unknown from './unknown';
 
+import { getChangeLog } from '../git';
+
 export const selectCommand = (command: string) => {
   const commandUndefined = command == null || command.length === 0;
 
@@ -17,6 +19,10 @@ export const selectCommand = (command: string) => {
 
   if (command === 'release') {
     return release;
+  }
+
+  if (command === 'log') {
+    getChangeLog('master');
   }
 
   // try to parse command as number for issue detection / checkout
