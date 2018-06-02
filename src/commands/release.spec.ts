@@ -56,6 +56,9 @@ const mockReadPkg = jest.fn().mockResolvedValue({ version });
 const mockOpn = jest.fn();
 
 // Register all necessary mock modules (from external packages)
+jest.mock('../git', () => ({
+  isBranchUpdated: () => true,
+}));
 jest.mock('write-pkg', () => (args: any) => mockWritePkg(args));
 jest.mock('read-pkg', () => () => mockReadPkg());
 jest.mock('opn', () => (url: string) => mockOpn(url));
