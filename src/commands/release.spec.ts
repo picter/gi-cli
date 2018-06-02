@@ -1,3 +1,4 @@
+import mockConsole from 'jest-mock-console'; // tslint:disable-line
 import { Arguments } from 'yargs';
 
 import release from './release';
@@ -76,8 +77,11 @@ describe('release command', () => {
   //    - .mockResolvedValueOnce({ current: 'random' })
   // it('throws an error when executed inside the release branch', () => {});
   // it('shows a warning message when not executed inside the master branch', () => {});
+  let restoreConsole: any;
+
   beforeAll(() => {
     setupGitMocks();
+    restoreConsole = mockConsole();
   });
 
   describe('when receives a specific version number', () => {
@@ -86,6 +90,12 @@ describe('release command', () => {
     beforeAll(() => {
       argv.newVersion = version;
       release('release', project, argv, token);
+    });
+
+    it('calls log function explaining changes', () => {
+      expect(console.log).toHaveBeenCalledWith(
+        expect.stringContaining('Release will do the following:'),
+      );
     });
 
     it('creates a new branch with "release-1.1.1"', () => {
@@ -119,6 +129,12 @@ describe('release command', () => {
       release('release', project, argv, token);
     });
 
+    it('calls log function explaining changes', () => {
+      expect(console.log).toHaveBeenCalledWith(
+        expect.stringContaining('Release will do the following:'),
+      );
+    });
+
     it(`creates a new branch with "release-2.0.0"`, () => {
       expect(mockCheckoutLocalBranch).toHaveBeenCalledWith(releaseBranch);
     });
@@ -139,5 +155,9 @@ describe('release command', () => {
     it(`commits with "Release v2.0.0" message`, () => {
       expect(mockCommit).toHaveBeenCalledWith(`Release v${majorVersion}`);
     });
+  });
+
+  afterAll(() => {
+    restoreConsole();
   });
 });
