@@ -67,7 +67,7 @@ jest.mock('simple-git/promise', () => (pwd: string) => {
   return mockGitObject;
 });
 jest.mock('inquirer', () => ({
-  prompt: jest.fn().mockResolvedValue({ execute: true }),
+  prompt: jest.fn().mockResolvedValue({ execute: true, update: false }),
 }));
 
 describe('release command', () => {
