@@ -81,10 +81,9 @@ const releaseCommand = async (
     packageJson.version = versionIncrease;
     await writePkg(packageJson);
 
-    await repository
-      .add('package.json')
-      .commit(`Release v${versionIncrease}`)
-      .push('origin', releaseBranch, { '--set-upstream': true });
+    await repository.add('package.json');
+    await repository.commit(`Release v${versionIncrease}`);
+    await repository.push('origin', releaseBranch, { '--set-upstream': true });
 
     const projectUrl = `https://github.com/${project.scope}/${project.name}`;
     const url = `${projectUrl}/compare/${productionBranch}...${releaseBranch}`; // Use new branch name
