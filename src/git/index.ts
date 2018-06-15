@@ -8,6 +8,10 @@ interface Issue {
   title: string;
 }
 
+interface ConventionalCommit {
+  type: string;
+}
+
 export const slugifyTitle = (title: string) =>
   slugify(title, {
     lower: true,
@@ -31,12 +35,11 @@ export const getChangeLog = async (base: string) => {
   const status = await repository.status();
   const log = await repository.log([`${base}..${status.current}`]);
 
-  console.log(log);
-
   const commits = log
     .all
     .map((c: any) => [c.message, c.body].join('\n\n\n'))
-    .map(commitsParser.sync);
+    .map(commitsParser.sync)
+    .filter((commit: ConventionalCommit) => commit.type !== null);
 
   return commits;
 };
