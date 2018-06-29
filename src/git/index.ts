@@ -1,6 +1,8 @@
 import * as git from 'simple-git/promise'; // tslint:disable-line no-submodule-imports
 import * as slugify from 'slugify';
 import * as commitsParser from 'conventional-commits-parser';
+import * as changelogWriter from 'conventional-changelog-writer';
+import * as through from 'through2';
 
 interface Issue {
   number: number;
@@ -8,8 +10,9 @@ interface Issue {
   title: string;
 }
 
-interface ConventionalCommit {
-  type: string;
+interface Commit {
+  message: string;
+  body: string;
 }
 
 export const slugifyTitle = (title: string) =>
@@ -31,15 +34,24 @@ export const checkout = async (issue: Issue) => {
 };
 
 export const getChangeLog = async (base: string) => {
-  const repository = git(process.cwd());
-  const status = await repository.status();
-  const log = await repository.log([`${base}..${status.current}`]);
+  return new Promise(async (resolve) => {
+    const repository = git(process.cwd());
+    const status = await repository.status();
+    const log = await repository.log([`${base}..${status.current}`]);
+    const upstream = through.obj();
 
-  const commits = log
-    .all
-    .map((c: any) => [c.message, c.body].join('\n\n\n'))
-    .map(commitsParser.sync)
-    .filter((commit: ConventionalCommit) => commit.type !== null);
+    upstream
+      .pipe(commitsParser())
+      .pipe(changelogWriter())
+      .on('data', (changelog: string) => {
+        resolve(changelog);
+      })
 
-  return commits;
+    log.all.forEach((commit: Commit) => {
+      const commitText = [commit.message, commit.body].join('\n\n\n');
+      upstream.write(commitText);
+    });
+
+    upstream.end();
+  });
 };

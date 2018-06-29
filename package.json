@@ -60,6 +60,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "chalk": "^2.4.1",
+    "conventional-changelog-writer": "^4.0.0",
     "conventional-commits-parser": "^3.0.0",
     "inquirer": "^5.2.0",
     "js-yaml": "^3.9.1",
@@ -68,6 +69,7 @@
     "semver": "^5.5.0",
     "simple-git": "^1.92.0",
     "slugify": "^1.2.7",
+    "through2": "^2.0.3",
     "write-pkg": "^3.1.0",
     "yargs": "^11.0.0"
   }

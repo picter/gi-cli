@@ -52,6 +52,12 @@ const dummyLog = {
   },
   "total": 2
 };
+
+const expectedChangelog = `##  (2018-06-15)
+
+* feat: update readme with roadmap section
+`;
+
 const mockLog = jest.fn().mockResolvedValue(dummyLog);
 jest.mock('simple-git/promise', () => (pwd: string) => {
   return {
@@ -62,19 +68,5 @@ jest.mock('simple-git/promise', () => (pwd: string) => {
 
 test('Generates changelog from repo commits', async () => {
   expect(await getChangeLog('master'))
-    .toEqual([
-      {
-        "type": "feat",
-        "scope": null,
-        "subject": "update readme with roadmap section",
-        "merge": null,
-        "header": "feat: update readme with roadmap section",
-        "body": null,
-        "footer": null,
-        "notes": [],
-        "references": [],
-        "mentions": [],
-        "revert": null
-      },
-    ]);
+    .toEqual(expectedChangelog);
 });
