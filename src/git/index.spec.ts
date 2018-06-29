@@ -53,7 +53,7 @@ const dummyLog = {
   "total": 2
 };
 
-const expectedChangelog = `##  (2018-06-15)
+const expectedChangelog = `##  (${new Date().toJSON().slice(0, 10)})
 
 * feat: update readme with roadmap section
 `;
