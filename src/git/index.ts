@@ -24,3 +24,22 @@ export const checkout = async (issue: Issue) => {
 
   console.log('Checkout', branchName);
 };
+
+export const isBranchUpdated = async (branchName: string) => {
+  const repository = git(process.cwd());
+  let commitCount;
+  try {
+    await repository.checkout([branchName]);
+    await repository.fetch();
+
+    commitCount = await repository.raw([
+      'rev-list',
+      `HEAD..origin/${branchName}`,
+      '--count',
+    ]);
+  } catch (error) {
+    throw new Error(error);
+  }
+
+  return +commitCount === 0;
+};

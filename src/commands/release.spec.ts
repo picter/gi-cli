@@ -1,3 +1,4 @@
+import mockConsole from 'jest-mock-console'; // tslint:disable-line
 import { Arguments } from 'yargs';
 
 import release from './release';
@@ -11,31 +12,62 @@ const productionBranch = 'release';
 const argv = { _: [], $0: '', newVersion: '' };
 const token = '';
 
+let mockGitObject: any;
+let mockAdd: any;
+let mockCheckout: any;
+let mockCheckoutLocalBranch: any;
+let mockCommit: any;
+let mockFetch: any;
+let mockPush: any;
+let mockRaw: any;
+let mockStatus: any;
+
 // Initialize all necessary mock functions
-const mockAdd = jest.fn();
-const mockCheckoutLocalBranch = jest.fn();
-const mockCommit = jest.fn();
-const mockPush = jest.fn();
+function setupGitMocks() {
+  mockAdd = jest.fn();
+  mockCheckout = jest.fn();
+  mockCheckoutLocalBranch = jest.fn();
+  mockCommit = jest.fn();
+  mockFetch = jest.fn();
+  mockPush = jest.fn();
+  mockRaw = jest.fn();
+  mockStatus = jest.fn().mockResolvedValue({ current: 'master' });
+
+  mockGitObject = {
+    add: mockAdd,
+    checkout: mockCheckout,
+    checkoutLocalBranch: mockCheckoutLocalBranch,
+    commit: mockCommit,
+    fetch: mockFetch,
+    push: mockPush,
+    raw: mockRaw,
+    status: mockStatus,
+  };
+
+  mockAdd.mockImplementation(() => mockGitObject);
+  mockCheckout.mockImplementation(() => mockGitObject);
+  mockCheckoutLocalBranch.mockImplementation(() => mockGitObject);
+  mockCommit.mockImplementation(() => mockGitObject);
+  mockFetch.mockImplementation(() => mockGitObject);
+  mockPush.mockImplementation(() => mockGitObject);
+}
+
 const mockWritePkg = jest.fn(() => Promise.resolve());
 const mockReadPkg = jest.fn().mockResolvedValue({ version });
 const mockOpn = jest.fn();
-const mockStatus = jest.fn().mockResolvedValue({ current: 'master' });
 
 // Register all necessary mock modules (from external packages)
+jest.mock('../git', () => ({
+  isBranchUpdated: () => true,
+}));
 jest.mock('write-pkg', () => (args: any) => mockWritePkg(args));
 jest.mock('read-pkg', () => () => mockReadPkg());
 jest.mock('opn', () => (url: string) => mockOpn(url));
 jest.mock('simple-git/promise', () => (pwd: string) => {
-  return {
-    add: mockAdd,
-    checkoutLocalBranch: mockCheckoutLocalBranch,
-    commit: mockCommit,
-    push: mockPush,
-    status: mockStatus,
-  };
+  return mockGitObject;
 });
 jest.mock('inquirer', () => ({
-  prompt: jest.fn().mockResolvedValue({ execute: true }),
+  prompt: jest.fn().mockResolvedValue({ execute: true, update: false }),
 }));
 
 describe('release command', () => {
@@ -45,6 +77,12 @@ describe('release command', () => {
   //    - .mockResolvedValueOnce({ current: 'random' })
   // it('throws an error when executed inside the release branch', () => {});
   // it('shows a warning message when not executed inside the master branch', () => {});
+  let restoreConsole: any;
+
+  beforeAll(() => {
+    setupGitMocks();
+    restoreConsole = mockConsole();
+  });
 
   describe('when receives a specific version number', () => {
     const releaseBranch = `release-${version}`;
@@ -52,6 +90,12 @@ describe('release command', () => {
     beforeAll(() => {
       argv.newVersion = version;
       release('release', project, argv, token);
+    });
+
+    it('calls log function explaining changes', () => {
+      expect(console.log).toHaveBeenCalledWith(
+        expect.stringContaining('Release will do the following:'),
+      );
     });
 
     it('creates a new branch with "release-1.1.1"', () => {
@@ -85,6 +129,12 @@ describe('release command', () => {
       release('release', project, argv, token);
     });
 
+    it('calls log function explaining changes', () => {
+      expect(console.log).toHaveBeenCalledWith(
+        expect.stringContaining('Release will do the following:'),
+      );
+    });
+
     it(`creates a new branch with "release-2.0.0"`, () => {
       expect(mockCheckoutLocalBranch).toHaveBeenCalledWith(releaseBranch);
     });
@@ -105,5 +155,9 @@ describe('release command', () => {
     it(`commits with "Release v2.0.0" message`, () => {
       expect(mockCommit).toHaveBeenCalledWith(`Release v${majorVersion}`);
     });
+  });
+
+  afterAll(() => {
+    restoreConsole();
   });
 });

@@ -7,6 +7,8 @@ import * as git from 'simple-git/promise'; // tslint:disable-line no-submodule-i
 import * as writePkg from 'write-pkg';
 import { Arguments } from 'yargs';
 
+import { isBranchUpdated } from '../git';
+
 const productionBranch = 'release';
 
 const releaseCommand = async (
@@ -19,6 +21,7 @@ const releaseCommand = async (
   const repository = git(process.cwd());
   const packageJson = await readPkg({ normalize: false });
   const branch = (await repository.status()).current;
+  const isUpdated = await isBranchUpdated(branch);
   if (branch === productionBranch) {
     throw new Error(`Cannot create release for "${productionBranch}" branch.`);
   } else if (branch !== 'master') {
@@ -49,14 +52,26 @@ const releaseCommand = async (
     5. Open a {yellow pull request} url: {green "${productionBranch}...${releaseBranch}"}.
   `);
 
-  const answers: any = await prompt([
+  const questions = [
     {
       default: false,
       message: 'Wish to continue?',
       name: 'execute',
       type: 'confirm',
     },
-  ]);
+    {
+      default: false,
+      message: chalk`{red WARNING: Branch "${branch}" is not up-to-date.}\nDo you wish to updated it?`,
+      name: 'update',
+      type: 'confirm',
+      when: ({ execute }: { execute: boolean }) => execute && !isUpdated,
+    },
+  ];
+  const answers: any = await prompt(questions);
+
+  if (answers.update) {
+    await repository.pull();
+  }
 
   if (answers.execute) {
     // Checkout new branch `release-x.y.z`
