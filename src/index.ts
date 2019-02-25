@@ -27,6 +27,10 @@ const argv = yargs
         describe: 'Show interactive list',
       }),
   )
+  .command(
+    'new <issue-title>',
+    'Create new issue with first argument as issue title.',
+  )
   .command(['pr', 'merge'], 'Create pull/merge request for current branch.')
   .command('release [new-version]', 'Release current branch.', y =>
     y.positional('new-version', {

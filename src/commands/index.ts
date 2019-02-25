@@ -1,6 +1,7 @@
 import checkout from './checkout';
 import list from './list';
 import merge from './merge';
+import newCommand from './new';
 import release from './release';
 import unknown from './unknown';
 
@@ -13,6 +14,10 @@ export const selectCommand = (command: string) => {
 
   if (command === 'merge' || command === 'pr') {
     return merge;
+  }
+
+  if (command === 'new') {
+    return newCommand;
   }
 
   if (command === 'release') {
@@ -28,4 +33,4 @@ export const selectCommand = (command: string) => {
   return checkout;
 };
 
-export { list, checkout, merge, release, unknown };
+export { list, checkout, merge, newCommand, release, unknown };

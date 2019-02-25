@@ -37,6 +37,34 @@ export const getUserLogin = async (authToken: any) => {
   return response;
 };
 
+export const createIssue = async (
+  project: any,
+  issueTitle: string,
+  authToken: any,
+) => {
+  const response = await axios.post(
+    `${baseUrl}/repos/${project.scope}/${project.name}/issues`,
+    {
+      title: issueTitle,
+    },
+    {
+      headers: {
+        Authorization: `bearer ${authToken}`,
+      },
+    },
+  );
+  if (response.data) {
+    const issue = response.data;
+
+    return {
+      number: issue.number,
+      state: issue.state,
+      title: issue.title,
+    };
+  }
+  throw new Error('No response from axios post request');
+};
+
 export const getIssues = async (project: any, authToken: any) => {
   const response = await axios.post(
     `${baseUrl}/graphql`,
