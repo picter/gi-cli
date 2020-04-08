@@ -5,6 +5,12 @@
 
 Git issues command line interface.
 
+## Install
+
+Grab it from npm (or via yarn) and install it globally:
+
+    yarn global add gi-cli
+
 ## Config file
 
 Make sure to have a configuration file at `$HOME/.gi.yaml`. Here an example for
